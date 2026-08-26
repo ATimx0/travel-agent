@@ -1,0 +1,16 @@
+# 密钥与本地配置（切勿提交）
+.env
+server/.env
+.env.local
+
+# 依赖
+node_modules/
+server/node_modules/
+
+# 系统/编辑器
+.DS_Store
+*.log
+
+# 部署产物（由源码打包生成，不纳入版本控制）
+tencent-scf/
+tencent-scf.zip

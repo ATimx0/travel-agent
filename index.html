@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云游中国 - 智能旅行助手</title>
+  <meta name="description" content="基于实时天气的智能旅行推荐助手，覆盖中国20+热门与网红城市，支持 AI 出行规划">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">云游中国</span>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#hero">首页</a></li>
+        <li><a href="#weather">天气</a></li>
+        <li><a href="#" id="navAssistantLink">AI助手</a></li>
+        <li><a href="#destinations">目的地</a></li>
+        <li><a href="#mapview">地图</a></li>
+        <li><a href="#tips">旅行贴士</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section id="hero" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-tag">AGENT POWERED TRAVEL</p>
+      <h1 class="hero-title">云游中国</h1>
+      <p class="hero-subtitle">智能旅行助手 · 实时天气感知 · 个性化出行推荐</p>
+      <div class="hero-search">
+        <input type="text" id="citySearch" placeholder="输入城市名称，如：北京、上海、成都..." autocomplete="off" />
+        <button id="searchBtn">查询天气</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">20<span class="stat-plus">+</span></span>
+          <span class="stat-label">热门城市</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">实时</span>
+          <span class="stat-label">天气数据</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">AI</span>
+          <span class="stat-label">智能推荐</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>向下滚动探索</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <section id="weather" class="weather-section">
+    <div class="section-header">
+      <span class="section-tag">REAL-TIME WEATHER</span>
+      <h2>实时天气看板</h2>
+      <p>选择城市，查看实时天气与 AI 出行建议</p>
+    </div>
+    <div class="city-select" id="cityTabs"></div>
+    <div class="weather-search">
+      <input id="weatherSearch" class="weather-search-input" type="text" placeholder="🔍 搜索任意城市 / 地点（如：深圳、西湖、London）" />
+      <button id="weatherSearchBtn" class="weather-search-btn">查询</button>
+    </div>
+    <div class="weather-dashboard">
+      <div class="weather-main" id="weatherCard">
+        <div class="weather-placeholder">
+          <div class="placeholder-icon">⛅</div>
+          <p>点击上方城市标签，查看实时天气</p>
+        </div>
+      </div>
+      <div class="weather-side" id="weatherSide">
+        <div class="advice-placeholder">
+          <h3>AI 出行建议</h3>
+          <p>选择城市后，智能助手将根据实时天气为你生成个性化的出行建议，包括穿搭推荐、活动建议和注意事项。</p>
+        </div>
+      </div>
+    </div>
+    <div class="weather-hourly" id="hourlyContainer"></div>
+    <div class="weather-forecast" id="forecastContainer"></div>
+  </section>
+
+  <section id="destinations" class="destinations-section">
+    <div class="section-header">
+      <span class="section-tag">POPULAR DESTINATIONS</span>
+      <h2>热门目的地</h2>
+      <p>探索中国最值得去的旅行目的地，点击卡片查看实时天气</p>
+    </div>
+    <div class="dest-carousel">
+      <button class="dest-carousel-btn dest-carousel-prev" id="destCarouselPrev" aria-label="上一组">‹</button>
+      <div class="dest-carousel-viewport">
+        <div class="destinations-track" id="destinationsGrid"></div>
+      </div>
+      <button class="dest-carousel-btn dest-carousel-next" id="destCarouselNext" aria-label="下一组">›</button>
+      <div class="dest-carousel-dots" id="destCarouselDots"></div>
+    </div>
+  </section>
+
+  <section id="mapview" class="map-section">
+    <div class="section-header">
+      <span class="section-tag">INTERACTIVE MAP</span>
+      <h2>中国旅行地图</h2>
+      <p>点击城市标记看实时天气与景点；悬停看实时天气与景点轮播；设起点终点让 AI 规划出行方式</p>
+    </div>
+
+    <div class="route-panel" id="routePanel">
+      <div class="route-head">
+        <span class="route-title">🧭 AI 出行规划</span>
+        <span class="route-sub">设起点 / 终点与途经点，AI 推荐最佳出行方式与打卡顺序</span>
+      </div>
+      <div class="route-row">
+        <div class="route-search" data-which="start">
+          <input id="routeStartInput" class="route-search-input" type="text" placeholder="输入起点（城市 / 景点 / 地名）" autocomplete="off" />
+          <button id="routeLocateBtn" class="route-locate-btn" type="button" title="使用我的位置作为起点" aria-label="使用我的位置">📍</button>
+          <input type="hidden" id="routeStart" />
+          <div class="route-search-popup" id="routeStartPopup" hidden></div>
+        </div>
+        <span class="route-arrow">→</span>
+        <div class="route-search" data-which="end">
+          <input id="routeEndInput" class="route-search-input" type="text" placeholder="输入终点（城市 / 景点 / 地名）" autocomplete="off" />
+          <input type="hidden" id="routeEnd" />
+          <div class="route-search-popup" id="routeEndPopup" hidden></div>
+        </div>
+      </div>
+      <div class="route-waypoints">
+        <div class="route-wp-input">
+          <input id="waypointInput" class="route-input" type="text" placeholder="添加途经点（景点/地点，可留空）" />
+          <button id="waypointAdd" class="route-btn route-btn-ghost">＋ 添加</button>
+        </div>
+        <div class="route-wp-chips" id="waypointChips"></div>
+      </div>
+      <div class="route-tabs" id="routeTabs">
+        <button type="button" class="route-tab active" data-mode="drive">🚗 驾车</button>
+        <button type="button" class="route-tab" data-mode="transit">🚌 公交地铁</button>
+        <button type="button" class="route-tab" data-mode="walk">🚶 步行</button>
+        <button type="button" class="route-tab" data-mode="ride">🚲 骑行</button>
+      </div>
+      <div class="route-row route-pref-row">
+        <label class="route-pref-label">偏好</label>
+        <select id="routePref" class="route-select route-select-sm">
+          <option value="recommend">智能推荐</option>
+          <option value="fastest">最快到达</option>
+          <option value="cheapest">最省钱</option>
+          <option value="avoidtraffic">躲避拥堵</option>
+        </select>
+      </div>
+      <div class="route-actions">
+        <button id="routePlanBtn" class="route-btn route-btn-primary">🧭 规划路线</button>
+        <button id="routePickBtn" class="route-btn route-btn-ghost">📍 地图自由选点</button>
+        <button id="routeDoneBtn" class="route-btn route-btn-done" hidden>✓ 完成选点</button>
+        <button id="routeNearbyBtn" class="route-btn route-btn-ghost">🔍 周边探索</button>
+        <button id="routeClearBtn" class="route-btn route-btn-ghost">清除</button>
+      </div>
+      <div class="route-result" id="routeResult"></div>
+      <div class="route-nearby" id="routeNearby"></div>
+    </div>
+
+    <div class="map-wrap">
+      <div id="chinaMap"></div>
+      <button id="trafficToggle" class="map-floating-btn" type="button" aria-pressed="false">🚦 实时路况</button>
+      <div class="map-hint">🟢 标记点 = 全国热门旅游城市（覆盖各省份）· 悬停看实时天气 + 景点轮播 · 点「地图自由选点」可自定义起点终点 · 地图数据 © 高德地图 · 景点照片来自维基共享资源（CC 授权）</div>
+    </div>
+    <!-- 全屏导航面板（开始导航后展示，仿手机导航主界面） -->
+    <div id="navOverlay" class="nav-overlay" hidden aria-modal="true" role="dialog"></div>
+  </section>
+
+  <section id="guide" class="guide-section">
+    <!-- 编辑式 masthead -->
+    <header class="gs-masthead">
+      <div class="gs-mh-meta">
+        <span class="gs-mh-vol">Vol. 01</span>
+        <span class="gs-mh-dot"></span>
+        <span class="gs-mh-tag">AI Generated Travel Guide</span>
+        <span class="gs-mh-date" id="gsMhDate"></span>
+      </div>
+      <h2 class="gs-mh-title">AI 旅行攻略<em>·</em><span class="gs-mh-title-en">Editor at Large</span></h2>
+      <p class="gs-mh-sub">告诉 AI 你想去哪、想怎么玩——几秒生成专属的小红书风格深度指南。</p>
+    </header>
+
+    <!-- 一体化驾驶舱：目的地输入 + 分段控件 -->
+    <div class="gs-cockpit">
+      <div class="gs-cp-dest">
+        <span class="gs-cp-icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 5 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </span>
+        <input class="gs-cp-input" id="guideCityInput" type="text" autocomplete="off" placeholder="输入任意城市或景点，如 北京/西安/西湖" value="北京" />
+        <button class="gs-cp-quick" id="guideCitySwitch" type="button">常用 ▾</button>
+        <div class="guide-city-popup" id="guideCityPopup" hidden></div>
+      </div>
+
+      <div class="gs-cp-seg" id="guideCats" role="tablist">
+        <span class="gs-cp-seg-indicator" id="gsCatsIndicator" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <!-- CTA + 提示 -->
+    <div class="gs-cta-row">
+      <button class="gs-cta" id="guideGenBtn" type="button">
+        <span class="gs-cta-glow" aria-hidden="true"></span>
+        <span class="gs-cta-text">✨ 生成攻略</span>
+      </button>
+      <span class="gs-cta-hint" id="gsCtaHint">AI 实时生成 · 约需 5-10 秒</span>
+    </div>
+
+    <!-- 结果区：空状态 / loading / 攻略卡 / 错误 -->
+    <div class="gs-result" id="guideResult"></div>
+  </section>
+
+  <section id="tips" class="tips-section">
+    <div class="section-header">
+      <span class="section-tag">TRAVEL TIPS</span>
+      <h2>旅行贴士</h2>
+      <p>实用旅行小知识，让旅途更轻松</p>
+    </div>
+    <div class="tips-grid" id="tipsGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo-icon">✦</span>
+        <span>云游中国</span>
+      </div>
+      <p class="footer-desc">智能旅行助手 · 让每次出行都有好天气相伴</p>
+      <p class="footer-note">天气数据由 wttr.in 提供 · 地图数据 © 高德地图 · 本项目仅供学习参考</p>
+      <div class="footer-tech">
+        <span>HTML5</span>
+        <span>CSS3</span>
+        <span>JavaScript</span>
+        <span>Agent Architecture</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- 悬浮 AI 助手 -->
+  <button class="chat-fab" id="chatFab" aria-label="打开 AI 助手">
+    <span class="chat-fab-icon">✦</span>
+    <span class="chat-fab-text">AI 助手</span>
+  </button>
+
+  <div class="chat-widget" id="chatWidget" role="dialog" aria-label="AI 旅行助手">
+    <div class="chat-widget-header">
+      <div class="chat-agent-info">
+        <div class="agent-avatar">✦</div>
+        <div>
+          <span class="agent-name">云游小助手</span>
+          <span class="agent-status">在线 · 随时为你服务</span>
+        </div>
+      </div>
+      <button class="chat-widget-close" id="chatClose" aria-label="关闭">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-quick-actions" id="quickActions"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="问我任何旅行问题，如：今天去哪玩？" autocomplete="off" />
+      <button id="sendBtn">
+        <span>发送</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="config.js" defer></script>
+  <script src="data/city_db.js" defer></script>
+  <script src="data/spot_db.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

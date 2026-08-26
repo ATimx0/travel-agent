@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>导航面板预览（离线）</title>
+<link rel="stylesheet" href="../style.css" />
+<style>
+  body { margin: 0; background: #0b1220; }
+  /* 预览：直接把 navOverlay 显示出来 */
+  #navOverlay { position: relative; inset: auto; display: flex; min-height: 100vh; }
+</style>
+</head>
+<body>
+<div id="navOverlay" class="nav-overlay" aria-modal="true" role="dialog">
+  <div class="nav-card">
+    <div class="nav-top">
+      <button class="nav-close" aria-label="关闭导航">✕</button>
+      <div class="nav-eta-wrap"><div class="nav-eta-label">预计到达</div>
+        <div class="nav-eta-time">14:32</div></div>
+      <button class="nav-voice on" aria-pressed="true" title="语音播报">🔊</button>
+    </div>
+    <div class="nav-remain">剩余 <strong>186.4</strong> 公里 · 约 <strong>2.3 小时</strong></div>
+    <div class="nav-turn">
+      <div class="nav-arrow m-right">↱</div>
+      <div class="nav-instr">
+        <div class="nav-dist">前方 1.2 公里</div>
+        <div class="nav-road">右转进入 长安街</div>
+      </div>
+    </div>
+    <div class="nav-next-preview">然后 <span class="m-sleft">⬉</span> 靠左 驶入 二环主路</div>
+    <div class="nav-steps" id="navSteps">
+      <div class="nav-step done" data-i="0"><span class="nav-step-arrow m-depart">🚩</span><span class="nav-step-text">从「北京」出发</span></div>
+      <div class="nav-step active" data-i="1"><span class="nav-step-arrow m-right">↱</span><span class="nav-step-text">右转进入 长安街</span><span class="nav-step-dist">1.2km</span></div>
+      <div class="nav-step" data-i="2"><span class="nav-step-arrow m-sleft">⬉</span><span class="nav-step-text">靠左 驶入 二环主路</span><span class="nav-step-dist">3.5km</span></div>
+      <div class="nav-step" data-i="3"><span class="nav-step-arrow m-straight">↑</span><span class="nav-step-text">沿二环主路 直行约 12 公里</span><span class="nav-step-dist">12.0km</span></div>
+      <div class="nav-step" data-i="4"><span class="nav-step-arrow m-left">↰</span><span class="nav-step-text">左转进入 京港澳高速 入口</span><span class="nav-step-dist">0.8km</span></div>
+      <div class="nav-step" data-i="5"><span class="nav-step-arrow m-arrive">🏁</span><span class="nav-step-text">到达目的地「石家庄」</span></div>
+    </div>
+    <button class="nav-advance" id="navAdvance">下一段 ▼</button>
+  </div>
+</div>
+</body>
+</html>

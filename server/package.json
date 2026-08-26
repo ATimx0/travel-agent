@@ -1,0 +1,14 @@
+{
+  "name": "travel-agent-guide-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "攻略生成后端代理（DeepSeek / OpenAI 兼容接口）",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

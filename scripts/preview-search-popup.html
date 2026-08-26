@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>搜索下拉修复预览</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  body { padding: 24px; background: #f1f5f9; }
+  .preview-wrap { max-width: 720px; margin: 0 auto; }
+  .demo-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(15,23,42,.08);
+    margin-bottom: 24px;
+  }
+  .demo-card h3 { margin: 0 0 12px; color: #0f172a; font-size: 16px; }
+  .demo-card p { margin: 0 0 12px; color: #64748b; font-size: 13px; }
+  /* 复用正式 route-search 样式 */
+  .route-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .route-arrow { color: #0284c7; font-weight: 800; font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="preview-wrap">
+
+<div class="demo-card">
+  <h3>1️⃣ 选择后立即关闭 popup</h3>
+  <p>输入 "北京" → 在候选里点击 "北京" → popup 应当立即消失，不应继续挡住地图</p>
+  <div class="route-row">
+    <div class="route-search" data-which="start" style="flex:1">
+      <input id="demoStart" class="route-search-input" type="text" placeholder="试试输入 'bj' / 'xian' / '故宫' / 'beijing'" />
+      <input type="hidden" id="routeStart" />
+      <div class="route-search-popup" id="routeStartPopup" hidden></div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-card">
+  <h3>2️⃣ 关键词联想（不仅限热门城市）</h3>
+  <p>输入拼音首字母、拼音全拼、城市 ID、景点名——都能搜到</p>
+  <div class="route-row">
+    <div class="route-search" data-which="end" style="flex:1">
+      <input id="demoEnd" class="route-search-input" type="text" placeholder="试试 'bj' / 'sh' / 'cd' / 'xian' / 'gugong' / 'beijing'" />
+      <input type="hidden" id="routeEnd" />
+      <div class="route-search-popup" id="routeEndPopup" hidden></div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:#94a3b8;margin-top:8px">
+    💡 输入完全打错的字符（如 "xxxxxx"）→ 会显示带建议 chip 的空态（"故宫/西湖/外滩/布达拉宫"），点击 chip 自动填入
+  </p>
+</div>
+
+<div class="demo-card">
+  <h3>3️⃣ popup z-index 提升</h3>
+  <p>现在 popup 的 z-index 是 9999，远超高德地图 Canvas；底部被地图挡住的问题已解决</p>
+  <div style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);height:140px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#0369a1;font-weight:600">
+    🗺️ 模拟地图区域
+  </div>
+</div>
+
+</div>
+</body>
+</html>

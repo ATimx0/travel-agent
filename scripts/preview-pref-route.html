@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>偏好改造后路线面板预览</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body { padding: 24px; max-width: 920px; margin: 0 auto; }
+    .preview-h { font-size: 13px; color: #6366f1; font-weight: 800; letter-spacing: 0.5px; margin: 28px 0 12px; text-transform: uppercase; }
+    .preview-h:first-of-type { margin-top: 0; }
+    .preview-card { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 4px 16px rgba(15,23,42,.06); border: 1px solid #e2e8f0; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;color:#0f172a;">「偏好」全链路改造后预览（直接看这页就行）</h1>
+  <p style="text-align:center;color:#64748b;font-size:13px;">顶部摘要新增 mode-chip + pref-badge + crosscity 三个状态指示；卡片 tag 跟随偏好动态切换。</p>
+
+  <div class="preview-h">场景 A · 公交跨城 1986km · 偏好「最快到达」</div>
+  <div class="preview-card">
+    <div class="route-summary">
+      <span class="rs-mode-chip">🚌 公交地铁</span>
+      <span class="route-pref-badge route-pref-fastest" title="实时生效">⚡ 最快到达 · 已按最快到达排序</span>
+      <span class="route-pref-crosscity" title="跨城约 1987 公里">🛬 跨城出行</span>
+      · 📏 <strong>1986.9</strong> 公里 · 🕒 约 <strong>5.2 小时</strong>
+    </div>
+    <div class="route-strategies">
+      <div class="route-strategy selected route-estimate" data-i="0">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-0">⚡ 最快到达</span>
+          <span class="rs-time">5小时10分</span>
+          <span class="rs-cost">约 ¥1200</span>
+        </div>
+        <div class="rs-sub">1986.9 公里 · 步行 159.0 公里 · 航班估算</div>
+      </div>
+      <div class="route-strategy route-estimate" data-i="1">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-1">方案2</span>
+          <span class="rs-time">8小时</span>
+          <span class="rs-cost">约 ¥900</span>
+        </div>
+        <div class="rs-sub">1986.9 公里 · 步行 159.0 公里 · 高铁估算</div>
+      </div>
+      <div class="route-strategy" data-i="2">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-2">方案3</span>
+          <span class="rs-time">26小时54分</span>
+          <span class="rs-cost">约 ¥499</span>
+        </div>
+        <div class="rs-sub">1986.9 公里 · 步行 159.0 公里</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-h">场景 B · 驾车 580km · 偏好「最省钱」</div>
+  <div class="preview-card">
+    <div class="route-summary">
+      <span class="rs-mode-chip">🚗 驾车</span>
+      <span class="route-pref-badge route-pref-cheapest" title="实时生效">💰 最省钱 · 已按票价/油费升序排序</span>
+      · 📏 <strong>580.0</strong> 公里 · 🕒 约 <strong>8.5 小时</strong>
+    </div>
+    <div class="route-strategies">
+      <div class="route-strategy selected" data-i="0">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-0">💰 最省钱</span>
+          <span class="rs-time">8小时30分</span>
+          <span class="rs-cost">约 ¥380</span>
+        </div>
+        <div class="rs-sub">580.0 公里 · 红绿灯 12 个 · 过路费 ¥200</div>
+      </div>
+      <div class="route-strategy" data-i="1">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-1">方案2</span>
+          <span class="rs-time">5小时30分</span>
+          <span class="rs-cost">约 ¥620</span>
+        </div>
+        <div class="rs-sub">605.0 公里 · 红绿灯 3 个 · 过路费 ¥350</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-h">场景 C · 驾车 200km · 偏好「躲避拥堵」</div>
+  <div class="preview-card">
+    <div class="route-summary">
+      <span class="rs-mode-chip">🚗 驾车</span>
+      <span class="route-pref-badge route-pref-avoidtraffic" title="实时生效">🛣️ 躲避拥堵 · 已采用躲避拥堵/少换乘策略</span>
+      · 📏 <strong>200.0</strong> 公里 · 🕒 约 <strong>2.6 小时</strong>
+    </div>
+    <div class="route-strategies">
+      <div class="route-strategy selected" data-i="0">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-0">🛣️ 躲避拥堵</span>
+          <span class="rs-time">2小时36分</span>
+          <span class="rs-cost">约 ¥180</span>
+        </div>
+        <div class="rs-sub">200.0 公里 · 红绿灯 8 个</div>
+      </div>
+      <div class="route-strategy" data-i="1">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-1">方案2</span>
+          <span class="rs-time">2小时12分</span>
+          <span class="rs-cost">约 ¥200</span>
+        </div>
+        <div class="rs-sub">200.0 公里 · 红绿灯 12 个</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-h">场景 D · 推荐偏好（默认）</div>
+  <div class="preview-card">
+    <div class="route-summary">
+      <span class="rs-mode-chip">🚗 驾车</span>
+      <span class="route-pref-badge route-pref-recommend" title="实时生效">🧭 智能推荐 · 按高德默认排序</span>
+      · 📏 <strong>120.0</strong> 公里 · 🕒 约 <strong>1.6 小时</strong>
+    </div>
+    <div class="route-strategies">
+      <div class="route-strategy selected" data-i="0">
+        <div class="rs-top">
+          <span class="rs-tag rs-tag-0">智能推荐</span>
+          <span class="rs-time">1小时36分</span>
+          <span class="rs-cost">约 ¥80</span>
+        </div>
+        <div class="rs-sub">120.0 公里 · 红绿灯 6 个</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
