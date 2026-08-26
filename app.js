@@ -381,17 +381,40 @@ const CACHE_DURATION = 10 * 60 * 1000;
 
 /* ============ 天气API（感知层） ============ */
 
-async function fetchWeather(cityPinyin) {
-  const cacheKey = cityPinyin.toLowerCase();
+async function fetchWeather(cityObj) {
+  // 兼容：旧调用可能传字符串(拼音/英文名)，统一为对象
+  var name = '';
+  var pinyin = '';
+  var coord = null;
+  if (typeof cityObj === 'string') {
+    pinyin = cityObj;
+  } else if (cityObj && typeof cityObj === 'object') {
+    name = cityObj.name || '';
+    pinyin = cityObj.pinyin || '';
+    coord = Array.isArray(cityObj.coord) ? cityObj.coord : null;
+  }
+  // 缓存 key：优先用坐标（最精确、唯一），否则用拼音/名
+  var cacheKey = coord ? ('c' + coord[0].toFixed(3) + ',' + coord[1].toFixed(3)) : (pinyin || name).toLowerCase();
   const cached = weatherCache.get(cacheKey);
   if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
     return cached.data;
   }
 
+  // URL：有坐标用坐标格式（wttr.in/~lat,lon，最准，彻底避免中文/拼音错配城市）
+  var url;
+  if (coord && coord.length === 2) {
+    url = 'https://wttr.in/~' + coord[0] + ',' + coord[1] + '?format=j1';
+  } else {
+    // 无坐标兜底：只用拼音/英文名（绝不用纯中文，避免 Open-Meteo 那种跨城市错配）
+    var q = (/[A-Za-z]/.test(pinyin) ? pinyin : (/[A-Za-z]/.test(name) ? name : pinyin));
+    if (!q) return null;
+    url = 'https://wttr.in/' + encodeURIComponent(q) + '?format=j1';
+  }
+
   try {
     const controller = new AbortController();
     const wtimer = setTimeout(function() { controller.abort(); }, 6000);
-    const response = await fetch('https://wttr.in/' + encodeURIComponent(cityPinyin) + '?format=j1', { signal: controller.signal });
+    const response = await fetch(url, { signal: controller.signal });
     clearTimeout(wtimer);
     if (!response.ok) throw new Error('Weather API error: ' + response.status);
     const data = await response.json();
@@ -399,7 +422,7 @@ async function fetchWeather(cityPinyin) {
     weatherCache.set(cacheKey, { data: parsed, timestamp: Date.now() });
     return parsed;
   } catch (error) {
-    console.error('Weather fetch failed for ' + cityPinyin + ':', error);
+    console.error('Weather fetch failed for ' + (coord ? coord.join(',') : (pinyin || name)) + ':', error);
     return null;
   }
 }
@@ -702,7 +725,7 @@ async function selectCity(cityId) {
   forecastContainer.innerHTML = '';
   if (hourlyContainer) hourlyContainer.innerHTML = '<div class="hourly-empty">⏱ 加载未来 24 小时…</div>';
 
-  var weather = await fetchWeather(city.pinyin);
+  var weather = await fetchWeather(city);
 
   if (!weather) {
     weatherCard.innerHTML = '<div class="weather-placeholder"><div class="placeholder-icon">😕</div><p>暂未获取到' + city.name + '的天气数据<br>请稍后再试</p></div>';
@@ -1702,50 +1725,45 @@ function formatTimeShort(iso) {
   return m ? m[1] : iso;
 }
 
+/* 统一坐标解析：预置 coord → 拼音 Open-Meteo → 高德兜底。
+   返回 [lng, lat] 或 null。实时卡(wttr.in)与 7 天卡(Open-Meteo)共用，
+   保证两路用的是同一坐标，绝不一致 / 跨城市错配。 */
+async function resolveCoord(city) {
+  if (city && Array.isArray(city.coord) && city.coord.length === 2) return city.coord;
+  var py = (city && city.pinyin) ? city.pinyin : '';
+  var nm = (city && city.name) ? city.name : '';
+  // query 优先用拼音（英文/拼音命中 Open-Meteo），否则用中文走高德兜底
+  var query = /[A-Za-z]/.test(py) ? py : (/[A-Za-z]/.test(nm) ? nm : (py || nm));
+  if (!query) return null;
+  // 1) 拼音/英文名 → Open-Meteo geocoding（最准，只取第一个结果）
+  if (/[A-Za-z]/.test(query)) {
+    try {
+      var c1 = new AbortController();
+      var t1 = setTimeout(function() { c1.abort(); }, 5000);
+      var geoResp = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(query) + '&count=1&language=en', { signal: c1.signal });
+      clearTimeout(t1);
+      if (geoResp.ok) {
+        var geo = await geoResp.json();
+        if (geo.results && geo.results.length) return [geo.results[0].latitude, geo.results[0].longitude];
+      }
+    } catch (e1) { clearTimeout(t1); }
+  }
+  // 2) 高德浏览器端兜底（中文名 / 拼音失败 / 网络受限）
+  try {
+    var amap = await geocodePlace(query);
+    if (amap) return amap;
+  } catch (e2) {}
+  return null;
+}
+
 /* Open-Meteo 24h + 7 天扩展预告（无需 key）
    接受 city 对象：{ name, pinyin, coord:[lat,lon] }
-   - 优先用预置 coord（destinations 精选城已有，零误差）
-   - 其次用拼音去 Open-Meteo geocoding（避免中文搜错到同名小镇）
-   - 最后兜底：浏览器端高德 Geocoder（支持中文/拼音，解决湛江/深圳等任意地名）
-*/
+   坐标统一由 resolveCoord 解析（实时卡与 7 天卡共用同一坐标）。 */
 async function fetchExtendedForecast(city) {
   try {
-    var py = city && city.pinyin ? city.pinyin : '';
-    var nm = city && city.name ? city.name : '';
-    // query 优先用拼音（英文/拼音能命中 Open-Meteo），否则用中文名走高德兜底
-    var query = /[A-Za-z]/.test(py) ? py : (/[A-Za-z]/.test(nm) ? nm : (py || nm));
-    if (!query) return null;
-    var lat = city && Array.isArray(city.coord) ? city.coord[0] : null;
-    var lon = city && Array.isArray(city.coord) ? city.coord[1] : null;
-    // 1) 优先用预置坐标（最准，避开中文 geocoding 乱匹配）
-    if (lat == null || lon == null) {
-      // 2) 用拼音/英文名去 Open-Meteo geocoding（只取第一个结果，最准）
-      var okGeo = false;
-      if (/[A-Za-z]/.test(query)) {
-        var c1 = new AbortController();
-        var t1 = setTimeout(function() { c1.abort(); }, 5000);
-        try {
-          var geoResp = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(query) + '&count=1&language=en', { signal: c1.signal });
-          clearTimeout(t1);
-          if (geoResp.ok) {
-            var geo = await geoResp.json();
-            if (geo.results && geo.results.length) {
-              lat = geo.results[0].latitude;
-              lon = geo.results[0].longitude;
-              okGeo = true;
-            }
-          }
-        } catch (e1) { clearTimeout(t1); }
-      }
-      // 3) 高德浏览器端兜底（Open-Meteo 没搜到：中文名 / 拼音失败 / 网络受限）
-      if (!okGeo) {
-        try {
-          var amapCoord = await geocodePlace(query);
-          if (amapCoord) { lon = amapCoord[0]; lat = amapCoord[1]; okGeo = true; }
-        } catch (e2) {}
-      }
-      if (!okGeo) return null;
-    }
+    var coord = await resolveCoord(city);
+    if (!coord) return null;
+    var lat = coord[0], lon = coord[1];
     var c2 = new AbortController();
     var t2 = setTimeout(function() { c2.abort(); }, 6000);
     var fcUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon +
@@ -1851,19 +1869,8 @@ async function showWeatherForPlace(q) {
   side.innerHTML = '<div class="advice-placeholder"><div class="loading-spinner"></div><p style="margin-top:16px;text-align:center">AI 正在分析天气并生成建议...</p></div>';
   fc.innerHTML = '';
   if (hourly) hourly.innerHTML = '<div class="hourly-empty">⏱ 加载未来 24 小时…</div>';
-  var weather = await fetchWeather(q);
-  if (!weather) {
-    card.innerHTML = '<div class="weather-placeholder"><div class="placeholder-icon">😕</div><p>暂未获取到 ' + q + ' 的天气数据<br>请检查地点名称后重试</p></div>';
-    side.innerHTML = '<div class="advice-placeholder"><p>天气数据获取失败，无法生成建议。</p></div>';
-    if (hourly) hourly.innerHTML = '';
-    showToast('天气获取失败，请确认地点名称', 'error');
-    return;
-  }
-  renderWeatherCard({ name: q, region: '自定义地点', description: '你搜索的地点' }, weather);
-  renderAdvice(weather);
-
-  // 24h + 7 天：优先 Open-Meteo，失败回退 wttr.in
-  // q 命中 destinations 用预置坐标；命中 CITY_DB 用拼音；都没命中走 fetchExtendedForecast 的高德兜底
+  // —— 统一解析城市与坐标：实时卡(wttr.in) + 7 天卡(Open-Meteo) 共用同一坐标，
+  //    彻底避免「实时卡用中文名错配到别城 / 两路坐标不一致」的问题 ——
   var matchedCity = null;
   try {
     var qLower = String(q).toLowerCase();
@@ -1874,7 +1881,7 @@ async function showWeatherForPlace(q) {
         break;
       }
     }
-    // destinations 没命中 → 从 CITY_DB 拿拼音（中文名 → 英文拼音，Open-Meteo 更准）
+    // 不在精选城 → 从全国库 CITY_DB 取拼音（中文名 → 英文拼音，Open-Meteo 最准）
     if (!matchedCity && window.CITY_DB) {
       for (var ci = 0; ci < window.CITY_DB.length; ci++) {
         var cdb = window.CITY_DB[ci];
@@ -1885,8 +1892,23 @@ async function showWeatherForPlace(q) {
       }
     }
   } catch (e) {}
-  var extCity = matchedCity || { name: q, pinyin: q };
-  var ext = await fetchExtendedForecast(extCity);
+  // 解析坐标：精选城用预置 coord → 拼音 Open-Meteo → 高德兜底
+  var coord = await resolveCoord(matchedCity || { name: q, pinyin: q });
+  var cityForBoth = { name: q, pinyin: matchedCity ? matchedCity.pinyin : q, coord: coord };
+
+  var weather = await fetchWeather(cityForBoth);
+  if (!weather) {
+    card.innerHTML = '<div class="weather-placeholder"><div class="placeholder-icon">😕</div><p>暂未获取到 ' + q + ' 的天气数据<br>请检查地点名称后重试</p></div>';
+    side.innerHTML = '<div class="advice-placeholder"><p>天气数据获取失败，无法生成建议。</p></div>';
+    if (hourly) hourly.innerHTML = '';
+    showToast('天气获取失败，请确认地点名称', 'error');
+    return;
+  }
+  renderWeatherCard({ name: q, region: '自定义地点', description: '你搜索的地点' }, weather);
+  renderAdvice(weather);
+
+  // 24h + 7 天：与实时卡共用同一坐标，Open-Meteo 优先，失败回退 wttr.in
+  var ext = await fetchExtendedForecast(cityForBoth);
   var parsed = ext ? parseExtendedForecast(ext) : null;
   if (parsed && parsed.hourly && parsed.hourly.length >= 20) {
     renderHourly(parsed);
@@ -2023,7 +2045,7 @@ async function initMap() {
 async function openCityWeather(city, coord) {
   if (!chinaMap) return;
   chinaMap.setZoomAndCenter(7, coord);
-  var weather = await fetchWeather(city.pinyin);
+  var weather = await fetchWeather(city);
   var content;
   if (!weather) {
     content = '<div style="padding:12px;min-width:180px"><strong>' + city.name + '</strong><br>天气获取失败，请稍后重试</div>';
@@ -2087,7 +2109,7 @@ function showSpotPopover(city, pixel) {
   var wEl = el.querySelector('#spotWeather');
   if (wEl) {
     wEl.innerHTML = '<span class="spot-city">' + city.name + '</span><span class="spot-wx-loading">天气…</span>';
-    fetchWeather(city.pinyin).then(function(w) {
+    fetchWeather(city).then(function(w) {
       if (w && wEl && spotPopover === el) {
         wEl.innerHTML = '<span class="spot-city">' + city.name + '</span>' +
           '<span class="spot-wx">' +
@@ -2446,7 +2468,7 @@ function geocodePlace(q) {
       geocoder.getLocation(q, function(status, result) {
         if (status === 'complete' && result.info === 'OK' && result.geocodes && result.geocodes.length) {
           var loc = result.geocodes[0].    location;
-          resolve([loc.lng, loc.lat]);
+          resolve([loc.lat, loc.lng]);
         } else { resolve(null); }
       });
     } catch (e) { resolve(null); }
@@ -4488,7 +4510,7 @@ async function handleUserInput(input) {
 
 /* 处理城市天气查询 */
 async function processCityQuery(city) {
-  var weather = await fetchWeather(city.pinyin);
+  var weather = await fetchWeather(city);
   removeLoadingMessage();
 
   if (!weather) {
@@ -4528,7 +4550,7 @@ async function processRecommendationQuery() {
 
   var results = await Promise.all(
     citiesToCheck.map(async function(city) {
-      var weather = await fetchWeather(city.pinyin);
+      var weather = await fetchWeather(city);
       return { city: city, weather: weather, score: weather ? calculateWeatherScore(weather) : -1 };
     })
   );
