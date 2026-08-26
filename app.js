@@ -9,248 +9,248 @@
 var currentCityId = 'beijing'; // 当前选中的目的地（攻略板块共用）
 
 const destinations = [
-  { id:'beijing', name:'北京', pinyin:'Beijing', region:'华北', description:'千年古都，帝王之城', attractions:['故宫','长城','天坛'], bestSeason:'春秋', emoji:'🏯', color:'#e63946', gradient:'linear-gradient(135deg,#c41e3a,#e63946)',
+  { id:'beijing', name:'北京', pinyin:'Beijing', region:'华北', description:'千年古都，帝王之城', attractions:['故宫','长城','天坛'], bestSeason:'春秋', emoji:'🏯', color:'#e63946', gradient:'linear-gradient(135deg,#c41e3a,#e63946)', coord:[39.9042,116.4074],
     spots:[
       {name:'故宫',emoji:'🏛️',wiki:'故宫',intro:'明清两代皇宫，旧称紫禁城。明成祖朱棣于永乐四年（1406 年）下诏始建，征调百万工匠、历时十四年建成。占地 72 万平方米，房屋九千余间，是世界上现存规模最大、保存最完整的木质结构宫殿建筑群。1925 年辟为故宫博物院，1987 年成为中国首批世界文化遗产。'},
       {name:'长城',emoji:'🧱',wiki:'长城',intro:'始建于西周，秦代连缀成万里，明代大规模重修。八达岭、慕田峪段依山势蜿蜒，是冷兵器时代最伟大的军事防御工程。"不到长城非好汉"使其成为家喻户晓的民族象征，1987 年列入世界文化遗产。'},
       {name:'天坛',emoji:'⛩️',wiki:'天坛',intro:'明永乐十八年（1420 年）建，是明清两代帝王冬至祭天、孟春祈谷之所。祈年殿以"天圆地方"为念，不用一根横梁，全凭 28 根楠木柱层层承托，是中国古建筑的巅峰之作，1998 年列入世界遗产。'}
     ] },
-  { id:'shanghai', name:'上海', pinyin:'Shanghai', region:'华东', description:'魔都风云，东方明珠', attractions:['外滩','迪士尼','东方明珠'], bestSeason:'春秋', emoji:'🌃', color:'#2e86ab', gradient:'linear-gradient(135deg,#1a5276,#2e86ab)',
+  { id:'shanghai', name:'上海', pinyin:'Shanghai', region:'华东', description:'魔都风云，东方明珠', attractions:['外滩','迪士尼','东方明珠'], bestSeason:'春秋', emoji:'🌃', color:'#2e86ab', gradient:'linear-gradient(135deg,#1a5276,#2e86ab)', coord:[31.2304,121.4737],
     spots:[
       {name:'外滩',emoji:'🌆',wiki:'上海外滩',intro:'1843 年上海开埠后，外资银行与洋行沿黄浦江兴建起 52 栋风格各异的万国建筑博览群（哥特、巴洛克、罗马式等）。对岸陆家嘴的摩天楼群与之隔江相望，是"东方巴黎"百年沧桑的最佳注脚，夜景尤为迷人。'},
       {name:'迪士尼',emoji:'🏰',wiki:'上海迪士尼乐园',intro:'2016 年开园，是中国大陆首座迪士尼主题乐园。中央的奇幻童话城堡为全球最高最大，融合十二位迪士尼公主的故事。创极速光轮、七个小矮人矿山车等项目中西合璧，是亲子打卡胜地。'},
       {name:'东方明珠',emoji:'🗼',wiki:'东方明珠广播电视塔',intro:'1994 年落成的上海地标电视塔，高 468 米，11 个大小不一的球体串联如"大珠小珠落玉盘"。263 米主观光层与 259 米全透明悬空走廊可俯瞰黄浦江两岸，塔身灯光随节日变幻。'}
     ] },
-  { id:'chengdu', name:'成都', pinyin:'Chengdu', region:'西南', description:'天府之国，熊猫故乡', attractions:['大熊猫基地','宽窄巷子','锦里'], bestSeason:'春秋', emoji:'🐼', color:'#2ecc71', gradient:'linear-gradient(135deg,#27ae60,#2ecc71)',
+  { id:'chengdu', name:'成都', pinyin:'Chengdu', region:'西南', description:'天府之国，熊猫故乡', attractions:['大熊猫基地','宽窄巷子','锦里'], bestSeason:'春秋', emoji:'🐼', color:'#2ecc71', gradient:'linear-gradient(135deg,#27ae60,#2ecc71)', coord:[30.5728,104.0668],
     spots:[
       {name:'大熊猫基地',emoji:'🐼',wiki:'成都大熊猫繁育研究基地',intro:'成都大熊猫繁育研究基地建于 1987 年，由抢救的 6 只病饿大熊猫发展而来，如今圈养种群逾 200 只，是全球最重要的熊猫科研与保护机构。基地模拟山地竹林生境，可近距离观看幼崽嬉戏。'},
       {name:'宽窄巷子',emoji:'🏘️',wiki:'宽窄巷子',intro:'由宽巷子、窄巷子、井巷子三条清代古街组成，是老成都"少城"遗留下的兵丁胡同格局。青砖院落里茶馆、川剧、掏耳朵与盖碗茶交织，是体验成都慢生活的活标本。'},
       {name:'锦里',emoji:'🏮',wiki:'锦里',intro:'紧邻武侯祠的川西风情古街，得名于古"锦官城"。以三国文化为底，红灯笼下是担担面、糖油果子、三大炮等小吃，夜幕下的锦里最具市井烟火气，被誉为"成都版清明上河图"。'}
     ] },
-  { id:'hangzhou', name:'杭州', pinyin:'Hangzhou', region:'华东', description:'人间天堂，西湖美景', attractions:['西湖','灵隐寺','宋城'], bestSeason:'春秋', emoji:'🏞️', color:'#1abc9c', gradient:'linear-gradient(135deg,#16a085,#1abc9c)',
+  { id:'hangzhou', name:'杭州', pinyin:'Hangzhou', region:'华东', description:'人间天堂，西湖美景', attractions:['西湖','灵隐寺','宋城'], bestSeason:'春秋', emoji:'🏞️', color:'#1abc9c', gradient:'linear-gradient(135deg,#16a085,#1abc9c)', coord:[30.2741,120.1551],
     spots:[
       {name:'西湖',emoji:'🌊',wiki:'杭州西湖',intro:'三面云山一面城，自唐代白居易、宋代苏轼疏浚筑堤便成名湖。苏堤、白堤、断桥、三潭印月构成"西湖十景"。2011 年以"文化景观"列入世界遗产，"欲把西湖比西子"道尽其温婉。'},
       {name:'灵隐寺',emoji:'🛕',wiki:'灵隐寺',intro:'始建于东晋咸和元年（326 年），印度僧人慧理见飞来峰叹"仙灵所隐"而得名。寺隐于北高峰下，飞来峰石窟存元代造像百余尊，济公传说更添传奇，自古为江南禅林之首。'},
       {name:'宋城',emoji:'🎭',wiki:'杭州宋城',intro:'以南宋临安（杭州）风貌打造的主题景区，核心演出《宋城千古情》以良渚、南宋等历史片段编演，与拉斯维加斯"O 秀"、巴黎"红磨坊"并称世界三大名秀，年演出逾千场。'}
     ] },
-  { id:'xian', name:'西安', pinyin:'Xian', region:'西北', description:'十三朝古都，丝路起点', attractions:['兵马俑','大雁塔','古城墙'], bestSeason:'春秋', emoji:'⛩️', color:'#c0392b', gradient:'linear-gradient(135deg,#d4a574,#c0392b)',
+  { id:'xian', name:'西安', pinyin:'Xian', region:'西北', description:'十三朝古都，丝路起点', attractions:['兵马俑','大雁塔','古城墙'], bestSeason:'春秋', emoji:'⛩️', color:'#c0392b', gradient:'linear-gradient(135deg,#d4a574,#c0392b)', coord:[34.3416,108.9398],
     spots:[
       {name:'兵马俑',emoji:'🗿',wiki:'兵马俑',intro:'1974 年临潼农民打井时意外发现，是秦始皇陵的陪葬军阵。约八千件与真人等大的陶俑，兵种、面容、服饰无一雷同，再现秦军雄风，被誉为"世界第八大奇迹"，1987 年随秦始皇陵列入世界遗产。'},
       {name:'大雁塔',emoji:'📜',wiki:'大雁塔',intro:'唐永徽三年（652 年）玄奘为保存自天竺取回的梵文经卷而建，初为五层，后增至七层。登塔可俯瞰古城，广场的音乐喷泉与夜景今成打卡热点，与荐福寺小雁塔并称"二圣"。'},
       {name:'古城墙',emoji:'🧱',wiki:'西安城墙',intro:'明洪武年间在唐皇城基础上扩建，是中国现存最完整、规模最大的古代城垣，周长 13.74 公里。城墙宽阔可驰车，骑行或漫步其上，城门箭楼依旧，千年长安气象扑面而来。'}
     ] },
-  { id:'chongqing', name:'重庆', pinyin:'Chongqing', region:'西南', description:'山城雾都，火锅之城', attractions:['洪崖洞','长江索道','磁器口'], bestSeason:'春秋', emoji:'🌆', color:'#8e44ad', gradient:'linear-gradient(135deg,#8e44ad,#c0392b)',
+  { id:'chongqing', name:'重庆', pinyin:'Chongqing', region:'西南', description:'山城雾都，火锅之城', attractions:['洪崖洞','长江索道','磁器口'], bestSeason:'春秋', emoji:'🌆', color:'#8e44ad', gradient:'linear-gradient(135deg,#8e44ad,#c0392b)', coord:[29.4316,106.9123],
     spots:[
       {name:'洪崖洞',emoji:'🏯',wiki:'洪崖洞',intro:'位于嘉陵江畔崖壁上的吊脚楼群，依山就势十一层，夜灯亮起如《千与千寻》的汤屋。原名"洪崖门"为重庆古九门之一，今集火锅、酒吧与民俗于一体，是魔幻山城的封面。'},
       {name:'长江索道',emoji:'🚡',wiki:'长江索道',intro:'1987 年建成，横跨长江连接渝中区与南岸区，被誉为"万里长江第一条空中走廊"。车厢凌空而过，俯瞰两江交汇与错落立体的山城，是感受重庆"8D 魔幻"的最佳方式。'},
       {name:'磁器口',emoji:'🏘️',wiki:'磁器口古镇',intro:'嘉陵江畔的千年古镇，因明清瓷器转运而得名，曾是繁华的水陆码头。青石板街、陈麻花、川剧清音与老茶馆延续着老重庆的码头记忆，是主城中最具古韵的街巷。'}
     ] },
-  { id:'sanya', name:'三亚', pinyin:'Sanya', region:'华南', description:'热带天堂，海岛度假', attractions:['亚龙湾','天涯海角','蜈支洲岛'], bestSeason:'冬', emoji:'🏖️', color:'#00b4d8', gradient:'linear-gradient(135deg,#00b4d8,#0077b6)',
+  { id:'sanya', name:'三亚', pinyin:'Sanya', region:'华南', description:'热带天堂，海岛度假', attractions:['亚龙湾','天涯海角','蜈支洲岛'], bestSeason:'冬', emoji:'🏖️', color:'#00b4d8', gradient:'linear-gradient(135deg,#00b4d8,#0077b6)', coord:[18.2528,109.5119],
     spots:[
       {name:'亚龙湾',emoji:'🏖️',wiki:'亚龙湾',intro:'三亚东南的"天下第一湾"，7 公里银白沙滩形如新月，海水能见度逾 10 米。背靠青山、椰林绵延，终年可浴，是高端度假酒店与潜水、帆板等水上运动的天堂。'},
       {name:'天涯海角',emoji:'🪨',wiki:'天涯海角',intro:'海滨巨石上刻"天涯""海角""南天一柱"，始于清代官员题刻。古人视此为天之尽头、贬谪绝境，今引申为浪漫与远方，是三亚最具辨识度的地标与爱情打卡点。'},
       {name:'蜈支洲岛',emoji:'🏝️',wiki:'蜈支洲岛',intro:'海棠湾内的珊瑚岛，海水清澈如琉璃，珊瑚与热带鱼群清晰可辨，有"中国马尔代夫"之誉。潜水、摩托艇、直升机观光等项目丰富，也是电影《私人订制》的取景地。'}
     ] },
-  { id:'guilin', name:'桂林', pinyin:'Guilin', region:'华南', description:'山水甲天下', attractions:['漓江','阳朔','象鼻山'], bestSeason:'春秋', emoji:'⛰️', color:'#27ae60', gradient:'linear-gradient(135deg,#2ecc71,#27ae60)',
+  { id:'guilin', name:'桂林', pinyin:'Guilin', region:'华南', description:'山水甲天下', attractions:['漓江','阳朔','象鼻山'], bestSeason:'春秋', emoji:'⛰️', color:'#27ae60', gradient:'linear-gradient(135deg,#2ecc71,#27ae60)', coord:[25.2736,110.29],
     spots:[
       {name:'漓江',emoji:'🛶',wiki:'漓江',intro:'桂林至阳朔 83 公里水路，是"桂林山水甲天下"的精华。乘竹筏漂流，象鼻山、九马画山、黄布倒影次第展开，二十元人民币背面的漓江山水即取景于此，如行水墨长卷。'},
       {name:'阳朔',emoji:'🏞️',wiki:'阳朔',intro:'漓江畔的山水小镇，自唐宋便为隐居胜地。西街融中西风情，遇龙河竹筏、十里画廊骑行、实景演出《印象·刘三姐》闻名。徐悲鸿曾赞"阳朔美甲天下"。'},
       {name:'象鼻山',emoji:'🐘',wiki:'象鼻山',intro:'桂林城徽，山体神似巨象临江饮水，象鼻与象腿间形成"水月洞"。历代文人题刻满布，陆游、范成大均留墨，是这座山水之城最负盛名的自然奇观。'}
     ] },
-  { id:'lijiang', name:'丽江', pinyin:'Lijiang', region:'西南', description:'古城韵味，雪山壮丽', attractions:['丽江古城','玉龙雪山','泸沽湖'], bestSeason:'春秋冬', emoji:'🏔️', color:'#764ba2', gradient:'linear-gradient(135deg,#667eea,#764ba2)',
+  { id:'lijiang', name:'丽江', pinyin:'Lijiang', region:'西南', description:'古城韵味，雪山壮丽', attractions:['丽江古城','玉龙雪山','泸沽湖'], bestSeason:'春秋冬', emoji:'🏔️', color:'#764ba2', gradient:'linear-gradient(135deg,#667eea,#764ba2)', coord:[26.8721,100.233],
     spots:[
       {name:'丽江古城',emoji:'🏘️',wiki:'丽江古城',intro:'始建于宋末，纳西族聚居的千年古镇，1997 年列入世界文化遗产。玉河水系穿街走巷，四方街、木府与东巴象形文字承载纳西古乐与母系遗风，被誉为"高原姑苏"。'},
       {name:'玉龙雪山',emoji:'❄️',wiki:'玉龙雪山',intro:'纳西族神山，13 座雪峰南北纵列如玉龙腾空，主峰扇子陡 5596 米终年积雪。乘大索道可登 4506 米冰川公园，山麓蓝月谷湖水澄蓝如镜，是丽江的灵魂地标。'},
       {name:'泸沽湖',emoji:'🌊',wiki:'泸沽湖',intro:'川滇交界的高原湖泊，摩梭人"女儿国"走婚文化独特——"男不娶、女不嫁"，以母系大家庭为核心。猪槽船划过水性杨花点缀的湖面，晨雾中的里格半岛如世外桃源。'}
     ] },
-  { id:'zhangjiajie', name:'张家界', pinyin:'Zhangjiajie', region:'华中', description:'阿凡达取景，奇峰异石', attractions:['森林公园','天门山','玻璃栈道'], bestSeason:'春秋', emoji:'🌲', color:'#52b788', gradient:'linear-gradient(135deg,#2d6a4f,#52b788)',
+  { id:'zhangjiajie', name:'张家界', pinyin:'Zhangjiajie', region:'华中', description:'阿凡达取景，奇峰异石', attractions:['森林公园','天门山','玻璃栈道'], bestSeason:'春秋', emoji:'🌲', color:'#52b788', gradient:'linear-gradient(135deg,#2d6a4f,#52b788)', coord:[29.117,110.4791],
     spots:[
       {name:'森林公园',emoji:'🌲',wiki:'张家界国家森林公园',intro:'1982 年中国首个国家森林公园，三千余座石英砂岩峰林拔地而起，云雾缭绕如仙境。电影《阿凡达》中悬浮的"哈利路亚山"即以这里的乾坤柱为原型，故改名"哈利路亚山"。'},
       {name:'天门山',emoji:'🚠',wiki:'天门山 (张家界)',intro:'张家界之巅，因自然穿山溶洞"天门洞"得名。99 道弯的盘山公路号称"通天大道"，长 7455 米的索道为世界之最，贴崖而建的玻璃栈道惊险与云海并存。'},
       {name:'玻璃栈道',emoji:'🪟',wiki:'张家界玻璃栈道',intro:'悬挂于天门山悬崖之上的透明步道，脚下万丈深渊一览无余。挑战胆量的同时，可将奇峰、幽谷、云海尽收眼底，是张家界最刺激的体验项目之一。'}
     ] },
-  { id:'xiamen', name:'厦门', pinyin:'Xiamen', region:'华东', description:'海上花园，鼓浪屿风情', attractions:['鼓浪屿','环岛路','南普陀'], bestSeason:'春秋', emoji:'🌅', color:'#f7971e', gradient:'linear-gradient(135deg,#f7971e,#ffd200)',
+  { id:'xiamen', name:'厦门', pinyin:'Xiamen', region:'华东', description:'海上花园，鼓浪屿风情', attractions:['鼓浪屿','环岛路','南普陀'], bestSeason:'春秋', emoji:'🌅', color:'#f7971e', gradient:'linear-gradient(135deg,#f7971e,#ffd200)', coord:[24.4798,118.0894],
     spots:[
       {name:'鼓浪屿',emoji:'🎹',wiki:'鼓浪屿',intro:'厦门西南的海上花园小岛，2017 年列入世界文化遗产。近代曾为公共租界，留下千余栋中西合璧的万国建筑，钢琴密度冠绝全国，故有"琴岛"之称。日光岩、菽庄花园与蜿蜒小巷浪漫静谧。'},
       {name:'环岛路',emoji:'🚴',wiki:'厦门环岛路',intro:'依海岸而建的滨海景观大道，被誉为"最美马拉松赛道"。椰风海韵一路相伴，胡里山炮台、书法广场点缀其间，骑行或漫步于落日时分，金色的海面尤为动人。'},
       {name:'南普陀',emoji:'🛕',wiki:'南普陀寺',intro:'鹭岛名刹，始建于唐代，依五老峰面朝厦门湾。闽南佛学院所在地，素斋与南普陀素饼远近闻名。寺后登山可俯瞰厦大与上弦场，香火与书声相映成趣。'}
     ] },
-  { id:'qingdao', name:'青岛', pinyin:'Qingdao', region:'华东', description:'红瓦绿树，碧海蓝天', attractions:['栈桥','八大关','崂山'], bestSeason:'夏秋', emoji:'🍺', color:'#0097e6', gradient:'linear-gradient(135deg,#0097e6,#48dbfb)',
+  { id:'qingdao', name:'青岛', pinyin:'Qingdao', region:'华东', description:'红瓦绿树，碧海蓝天', attractions:['栈桥','八大关','崂山'], bestSeason:'夏秋', emoji:'🍺', color:'#0097e6', gradient:'linear-gradient(135deg,#0097e6,#48dbfb)', coord:[36.0671,120.3826],
     spots:[
       {name:'栈桥',emoji:'🌊',wiki:'青岛栈桥',intro:'青岛的城市原点，始建于清光绪十八年（1892 年），原是军事码头。长桥伸入青岛湾，桥端回澜阁八角重檐，是"红瓦绿树、碧海蓝天"的城市象征，也是最早的观光地标。'},
       {name:'八大关',emoji:'🏡',wiki:'八大关',intro:'以长城八大关隘命名的街区，汇聚俄、英、法、德等二十余国建筑风格的别墅，花石楼最为著名。四季花木掩映，春日碧桃、秋日银杏，浪漫静美如万国建筑博物馆。'},
       {name:'崂山',emoji:'⛰️',wiki:'崂山',intro:'耸立于黄海之滨，素有"海上名山第一"之称，道教全真派发祥地之一。太清宫古树参天、清幽古朴，蒲松龄《聊斋》中"崂山道士"即取材于此，山海相依的意境独步天下。'}
     ] },
-  { id:'changsha', name:'长沙', pinyin:'Changsha', region:'华中', description:'网红之都，烟火星城', attractions:['橘子洲','岳麓山','湖南省博物馆'], bestSeason:'春秋', emoji:'🍜', color:'#e84393', gradient:'linear-gradient(135deg,#d6336c,#e84393)',
+  { id:'changsha', name:'长沙', pinyin:'Changsha', region:'华中', description:'网红之都，烟火星城', attractions:['橘子洲','岳麓山','湖南省博物馆'], bestSeason:'春秋', emoji:'🍜', color:'#e84393', gradient:'linear-gradient(135deg,#d6336c,#e84393)', coord:[28.2282,112.9388],
     spots:[
       {name:'橘子洲',emoji:'🌊',wiki:'橘子洲',intro:'湘江中流的江心洲，因毛泽东《沁园春·长沙》"独立寒秋，湘江北去，橘子洲头"闻名。青年毛泽东艺术雕塑高 32 米，洲上草坪、橘园与音乐喷泉相映，是长沙最具地标性的城市客厅。'},
       {name:'岳麓山',emoji:'🍁',wiki:'岳麓山',intro:'湘江西岸的青翠山峦，有"岳麓之胜，甲于楚湘"之誉。山间爱晚亭因杜牧"停车坐爱枫林晚"成名，岳麓书院为千年学府，山下湖南大学书香绵延，秋来红枫满山。'},
       {name:'湖南省博物馆',emoji:'🏛️',wiki:'湖南省博物馆',intro:'馆藏以马王堆汉墓出土文物最为震撼——素纱襌衣薄如蝉翼、T 形帛画与千年不腐的女尸辛追，完整再现西汉贵族生活，是了解楚汉文明的必访之地。'}
     ] },
-  { id:'wuhan', name:'武汉', pinyin:'Wuhan', region:'华中', description:'江城武汉，樱花之城', attractions:['黄鹤楼','东湖','武汉大学'], bestSeason:'春秋', emoji:'🌸', color:'#2d98da', gradient:'linear-gradient(135deg,#2980b9,#2d98da)',
+  { id:'wuhan', name:'武汉', pinyin:'Wuhan', region:'华中', description:'江城武汉，樱花之城', attractions:['黄鹤楼','东湖','武汉大学'], bestSeason:'春秋', emoji:'🌸', color:'#2d98da', gradient:'linear-gradient(135deg,#2980b9,#2d98da)', coord:[30.5928,114.3055],
     spots:[
       {name:'黄鹤楼',emoji:'🏯',wiki:'黄鹤楼',intro:'江南三大名楼之首，"黄鹤一去不复返，白云千载空悠悠"传诵千年。始建于三国，屡毁屡建，今楼雄踞蛇山之巅、俯瞰万里长江与武汉长江大桥，是江城的精神坐标。'},
       {name:'东湖',emoji:'🚲',wiki:'东湖 (武汉)',intro:'中国最大的城中湖，水域达 33 平方公里。绿道环湖百余公里，磨山樱园春日繁花似雪，听涛、落雁景区各具意趣，是市民骑行慢跑的天然氧吧。'},
       {name:'武汉大学',emoji:'🌸',wiki:'武汉大学',intro:'百年学府，民国建筑掩映于珞珈山下。每年三月千株樱花次第绽放，老斋舍、樱顶老图与"武汉樱花"成为全网最火网红打卡，限流开放更显珍贵。'}
     ] },
-  { id:'harbin', name:'哈尔滨', pinyin:'Harbin', region:'东北', description:'冰雪之城，东方莫斯科', attractions:['冰雪大世界','中央大街','圣索菲亚教堂'], bestSeason:'冬', emoji:'❄️', color:'#38bdf8', gradient:'linear-gradient(135deg,#0ea5e9,#38bdf8)',
+  { id:'harbin', name:'哈尔滨', pinyin:'Harbin', region:'东北', description:'冰雪之城，东方莫斯科', attractions:['冰雪大世界','中央大街','圣索菲亚教堂'], bestSeason:'冬', emoji:'❄️', color:'#38bdf8', gradient:'linear-gradient(135deg,#0ea5e9,#38bdf8)', coord:[45.8038,126.535],
     spots:[
       {name:'冰雪大世界',emoji:'🏰',wiki:'哈尔滨冰雪大世界',intro:'每年冬季以松花江冰砖筑成的冰雪主题乐园，晶莹宝塔、冰滑梯与夜光城堡在霓虹下如童话王国，是"尔滨"冬季最耀眼的顶流网红 IP。'},
       {name:'中央大街',emoji:'🥃',wiki:'中央大街 (哈尔滨)',intro:'亚洲最长步行街之一，1450 米铺满百年前的面包石。两侧云集文艺复兴、巴洛克风格建筑，马迭尔冰棍、俄式西餐与冰雪夜景交织出浓浓异域风情。'},
       {name:'圣索菲亚教堂',emoji:'⛪',wiki:'圣索菲亚教堂 (哈尔滨)',intro:'始建于 1907 年的东正教教堂，墨绿穹顶与红砖墙在雪中格外肃穆，是哈尔滨"东方莫斯科"城市记忆的地标，夜间灯光秀常引游人驻足。'}
     ] },
-  { id:'dali', name:'大理', pinyin:'Dali', region:'西南', description:'风花雪月，苍山洱海', attractions:['洱海','大理古城','苍山'], bestSeason:'春秋', emoji:'🏞️', color:'#16a085', gradient:'linear-gradient(135deg,#1abc9c,#16a085)',
+  { id:'dali', name:'大理', pinyin:'Dali', region:'西南', description:'风花雪月，苍山洱海', attractions:['洱海','大理古城','苍山'], bestSeason:'春秋', emoji:'🏞️', color:'#16a085', gradient:'linear-gradient(135deg,#1abc9c,#16a085)', coord:[25.6065,100.2678],
     spots:[
       {name:'洱海',emoji:'🌊',wiki:'洱海',intro:'苍山脚下的高原湖泊，因形似人耳得名。环海公路串起双廊、喜洲，白族民居与远处苍山雪倒映碧波，海西生态廊道骑行、日出时分的粼粼波光是治愈系旅拍圣地。'},
       {name:'大理古城',emoji:'🏘️',wiki:'大理古城',intro:'南诏国、大理国故都，棋盘式街巷保留明清格局。五华楼下市井烟火，洋人街酒吧与扎染坊并存，苍山为屏、洱海为镜，慢生活节奏令人忘忧。'},
       {name:'苍山',emoji:'⛰️',wiki:'苍山',intro:'十九峰横列如屏，峰峰积雪、溪溪飞瀑。感通寺、清碧溪与洗马潭索道可观云海与高山杜鹃，是大理"风花雪月"中"苍山雪"的所在。'}
     ] },
-  { id:'lhasa', name:'拉萨', pinyin:'Lhasa', region:'西南', description:'日光之城，圣洁高原', attractions:['布达拉宫','大昭寺','八廓街'], bestSeason:'夏秋', emoji:'🛕', color:'#6c5ce7', gradient:'linear-gradient(135deg,#5b4be0,#8e7bef)',
+  { id:'lhasa', name:'拉萨', pinyin:'Lhasa', region:'西南', description:'日光之城，圣洁高原', attractions:['布达拉宫','大昭寺','八廓街'], bestSeason:'夏秋', emoji:'🛕', color:'#6c5ce7', gradient:'linear-gradient(135deg,#5b4be0,#8e7bef)', coord:[29.65,91.1],
     spots:[
       {name:'布达拉宫',emoji:'🏯',wiki:'布达拉宫',intro:'屹立于红山之上的宫堡式建筑群，松赞干布始建、五世达赖扩建，是藏式建筑的巅峰与藏传佛教圣地。白宫居政、红宫奉佛，1994 年列入世界文化遗产，必提前预约。'},
       {name:'大昭寺',emoji:'🛕',wiki:'大昭寺',intro:'建于公元 647 年，供奉文成公主带入的释迦牟尼十二岁等身像，是藏民心中最神圣的寺院。寺前八廓街转经人流不息，"先有大昭寺，后有拉萨城"。'},
       {name:'八廓街',emoji:'🧶',wiki:'八廓街',intro:'环绕大昭寺的转经道，也是拉萨最古老的街市。玛吉阿米的黄房子、唐卡与藏饰店铺林立，甜茶馆里听一段仓央嘉措的传说，最是拉萨烟火气。'}
     ] },
-  { id:'suzhou', name:'苏州', pinyin:'Suzhou', region:'华东', description:'园林甲天下，最是江南', attractions:['拙政园','平江路','虎丘'], bestSeason:'春秋', emoji:'🌿', color:'#0984e3', gradient:'linear-gradient(135deg,#0c7cd5,#4aa3e0)',
+  { id:'suzhou', name:'苏州', pinyin:'Suzhou', region:'华东', description:'园林甲天下，最是江南', attractions:['拙政园','平江路','虎丘'], bestSeason:'春秋', emoji:'🌿', color:'#0984e3', gradient:'linear-gradient(135deg,#0c7cd5,#4aa3e0)', coord:[31.2989,120.5853],
     spots:[
       {name:'拙政园',emoji:'🌳',wiki:'拙政园',intro:'中国四大名园之首，明代官员辞官归隐所筑。以水为中心，亭台楼榭依水而建，借景北寺塔，一步一景，是江南古典园林"虽由人作，宛自天开"的典范。'},
       {name:'平江路',emoji:'🌿',wiki:'平江路',intro:'保存最完整的古城河街，八百年来水陆并行、河街相邻。青石板、小桥与评弹声里，奶茶店与手作铺子点缀，是苏州"最江南"的慢游路线。'},
       {name:'虎丘',emoji:'🗼',wiki:'虎丘',intro:'吴中第一山，云岩寺塔（虎丘塔）倾斜千年被誉为"东方比萨斜塔"。剑池、千人石与春秋吴王传说叠映，苏轼言"到苏州不游虎丘，乃憾事也"。'}
     ] },
-  { id:'nanjing', name:'南京', pinyin:'Nanjing', region:'华东', description:'六朝古都，金陵烟水', attractions:['中山陵','夫子庙','玄武湖'], bestSeason:'春秋', emoji:'🏛️', color:'#e17055', gradient:'linear-gradient(135deg,#d35400,#e17055)',
+  { id:'nanjing', name:'南京', pinyin:'Nanjing', region:'华东', description:'六朝古都，金陵烟水', attractions:['中山陵','夫子庙','玄武湖'], bestSeason:'春秋', emoji:'🏛️', color:'#e17055', gradient:'linear-gradient(135deg,#d35400,#e17055)', coord:[32.0603,118.7969],
     spots:[
       {name:'中山陵',emoji:'⛩️',wiki:'中山陵',intro:'紫金山南麓的孙中山先生陵寝，392 级台阶寓意三民主义。蓝瓦白墙、肃穆庄严，登高可俯瞰金陵城，梧桐大道四季皆景，是南京的精神地标。'},
       {name:'夫子庙',emoji:'🏮',wiki:'夫子庙',intro:'秦淮河畔的孔庙所在，自古文人荟萃。"桨声灯影里的秦淮河"画舫夜游、小吃琳琅，江南贡院见证千年科举，是南京最有人间烟火的历史街区。'},
       {name:'玄武湖',emoji:'🌊',wiki:'玄武湖',intro:'六朝皇家园林湖泊，五洲点缀、城墙环抱。台城段城墙可俯瞰湖光城影，春日樱洲如雪，是主城内难得的山水闲步之处。'}
     ] },
-  { id:'tianjin', name:'天津', pinyin:'Tianjin', region:'华北', description:'曲艺之乡，洋楼津味', attractions:['天津之眼','五大道','意式风情区'], bestSeason:'春秋', emoji:'🎡', color:'#fd79a8', gradient:'linear-gradient(135deg,#e84393,#fd79a8)',
+  { id:'tianjin', name:'天津', pinyin:'Tianjin', region:'华北', description:'曲艺之乡，洋楼津味', attractions:['天津之眼','五大道','意式风情区'], bestSeason:'春秋', emoji:'🎡', color:'#fd79a8', gradient:'linear-gradient(135deg,#e84393,#fd79a8)', coord:[39.3434,117.3616],
     spots:[
       {name:'天津之眼',emoji:'🎡',wiki:'天津之眼',intro:'横跨海河永乐桥的巨型摩天轮，高 120 米，是世界唯一建在桥上的摩天轮。入夜华灯流转，车厢升至顶端可俯瞰津城与海河，浪漫地标。'},
       {name:'五大道',emoji:'🏡',wiki:'五大道',intro:'由马场道等五条街道组成的租界风貌区，两千余栋花园洋房汇集英、法、意、德式建筑，睦南道上的名人旧居与海棠花海，是"万国建筑博览会"。'},
       {name:'意式风情区',emoji:'🍝',wiki:'天津意式风情区',intro:'亚洲最大的意大利风格建筑群，原意大利租界。马可波罗广场、回力球馆与红顶石砌小楼间咖啡飘香，是夜生活与浪漫兼具的历史街区。'}
     ] },
-  { id:'guangzhou', name:'广州', pinyin:'Guangzhou', region:'华南', description:'千年商都，食在广州', attractions:['广州塔','陈家祠','沙面'], bestSeason:'秋冬', emoji:'🏙️', color:'#e84393', gradient:'linear-gradient(135deg,#d63031,#e84393)',
+  { id:'guangzhou', name:'广州', pinyin:'Guangzhou', region:'华南', description:'千年商都，食在广州', attractions:['广州塔','陈家祠','沙面'], bestSeason:'秋冬', emoji:'🏙️', color:'#e84393', gradient:'linear-gradient(135deg,#d63031,#e84393)', coord:[23.1291,113.2644],
     spots:[
       {name:'广州塔',emoji:'🗼',wiki:'广州塔',intro:'昵称"小蛮腰"，高 600 米，2010 年落成时为世界最高电视塔之一。塔身采用扭转的镂空钢结构，云霄飞车、摩天轮与 488 米户外观景平台可饱览珠江两岸，夜景灯光随季节变幻。'},
       {name:'陈家祠',emoji:'🏯',wiki:'陈氏书院',intro:'清光绪年间建的岭南宗祠书院，集木雕、砖雕、石雕、灰塑、陶塑"三雕两塑"于一体，是广府建筑装饰艺术的巅峰，今为广东民间工艺博物馆。'},
       {name:'沙面',emoji:'🌿',wiki:'沙面',intro:'珠江岔流中的小岛，曾为英法租界。150 余栋新巴洛克、新古典与哥特式建筑掩于榕荫大道间，岛西的白天鹅宾馆与咖啡馆让这里成为慢拍的citywalk天堂。'}
     ] },
-  { id:'huangshan', name:'黄山', pinyin:'Huangshan', region:'华东', description:'奇松怪石，云海日出', attractions:['黄山风景区','宏村','西递'], bestSeason:'春秋', emoji:'🏔️', color:'#0984e3', gradient:'linear-gradient(135deg,#0c7cd5,#4aa3e0)',
+  { id:'huangshan', name:'黄山', pinyin:'Huangshan', region:'华东', description:'奇松怪石，云海日出', attractions:['黄山风景区','宏村','西递'], bestSeason:'春秋', emoji:'🏔️', color:'#0984e3', gradient:'linear-gradient(135deg,#0c7cd5,#4aa3e0)', coord:[29.7148,118.3375],
     spots:[
       {name:'黄山风景区',emoji:'🌄',wiki:'黄山',intro:'"五岳归来不看山，黄山归来不看岳"。奇松、怪石、云海、温泉、冬雪并称五绝，迎客松依崖而生千年。1990 年列入世界文化与自然双遗产，光明顶日出云海尤为震撼。'},
       {name:'宏村',emoji:'🏘️',wiki:'宏村',intro:'始建于南宋的徽派古村，以"牛形"水系闻名，月沼、南湖倒映粉墙黛瓦。2000 年与西递同列世界文化遗产，是徽州文化与写生摄影的圣地。'},
       {name:'西递',emoji:'🏯',wiki:'西递镇',intro:'胡适故里般的徽州古村落，胡文光牌坊与百余栋明清古民居保存完好，"桃花源里人家"。青石板巷、马头墙与楹联家训，是徽派村落的活标本。'}
     ] },
-  { id:'guiyang', name:'贵阳', pinyin:'Guiyang', region:'西南', description:'爽爽贵阳，避暑之都', attractions:['甲秀楼','青岩古镇','黔灵山'], bestSeason:'夏', emoji:'🌿', color:'#10b981', gradient:'linear-gradient(135deg,#059669,#34d399)',
+  { id:'guiyang', name:'贵阳', pinyin:'Guiyang', region:'西南', description:'爽爽贵阳，避暑之都', attractions:['甲秀楼','青岩古镇','黔灵山'], bestSeason:'夏', emoji:'🌿', color:'#10b981', gradient:'linear-gradient(135deg,#059669,#34d399)', coord:[26.647,106.6302],
     spots:[
       {name:'甲秀楼',emoji:'🏯',wiki:'甲秀楼',intro:'明万历年间建在南明河鳌矶石上的三层阁楼，朱梁碧瓦、夜灯倒映河中，"科甲挺秀"寓意人才辈出，是贵阳城徽与老城中心地标。'},
       {name:'青岩古镇',emoji:'🏘️',wiki:'青岩古镇',intro:'明初 military 屯堡，城墙、石板街与四教并存（佛、道、天主、基督）。卤猪脚、玫瑰糖与背街的百年石巷，是贵阳近郊最地道的明清古镇。'},
       {name:'黔灵山',emoji:'🐒',wiki:'黔灵山公园',intro:'城中的灵秀山岳，弘福寺香火鼎盛，猕猴成群穿行其间。九曲径、黔灵湖与动物园集自然与人文，是"黔南第一山"式的市郊绿肺。'}
     ] },
-  { id:'shenyang', name:'沈阳', pinyin:'Shenyang', region:'东北', description:'盛京故都，工业重镇', attractions:['沈阳故宫','张氏帅府','九一八历史博物馆'], bestSeason:'夏秋', emoji:'🏯', color:'#6366f1', gradient:'linear-gradient(135deg,#4f46e5,#818cf8)',
+  { id:'shenyang', name:'沈阳', pinyin:'Shenyang', region:'东北', description:'盛京故都，工业重镇', attractions:['沈阳故宫','张氏帅府','九一八历史博物馆'], bestSeason:'夏秋', emoji:'🏯', color:'#6366f1', gradient:'linear-gradient(135deg,#4f46e5,#818cf8)', coord:[41.8057,123.4315],
     spots:[
       {name:'沈阳故宫',emoji:'🏯',wiki:'沈阳故宫',intro:'清入关前（后金/清初）的皇宫，1625 年始建，是中国现存第二大皇宫建筑群。大政殿八角重檐、十王亭一字排开，满蒙汉建筑交融，2004 年列入世界遗产。'},
       {name:'张氏帅府',emoji:'🏛️',wiki:'张氏帅府',intro:'北洋奉系军阀张作霖、张学良父子的官邸私宅，中西合璧的庞大建筑群。四合院、大青楼与赵四小姐楼见证民国风云，是与沈阳故宫相邻的近代史现场。'},
       {name:'九一八历史博物馆',emoji:'🕯️',wiki:'九一八历史博物馆',intro:'位于事变爆发地柳条湖旁，巨型残历碑铭刻 1931 年 9 月 18 日。陈列揭露侵华史实，是国家级爱国主义教育示范基地与重要历史纪念地。'}
     ] },
-  { id:'luoyang', name:'洛阳', pinyin:'Luoyang', region:'华中', description:'十三朝古都，牡丹花城', attractions:['龙门石窟','白马寺','老君山'], bestSeason:'春秋', emoji:'🏯', color:'#e67e22', gradient:'linear-gradient(135deg,#d35400,#e67e22)',
+  { id:'luoyang', name:'洛阳', pinyin:'Luoyang', region:'华中', description:'十三朝古都，牡丹花城', attractions:['龙门石窟','白马寺','老君山'], bestSeason:'春秋', emoji:'🏯', color:'#e67e22', gradient:'linear-gradient(135deg,#d35400,#e67e22)', coord:[34.6197,112.4539],
     spots:[
       {name:'龙门石窟',emoji:'🗿',wiki:'龙门石窟',intro:'始凿于北魏，历时 400 余年。两山对峙、伊水穿流，十万尊造像中以卢舍那大佛最为恢宏，武则天据传以其容貌雕成。2000 年列入世界遗产。'},
       {name:'白马寺',emoji:'🛕',wiki:'白马寺',intro:'东汉永平年间创建，被尊为中国第一古刹、佛教传入中原的祖庭。齐云塔、缅甸风格佛殿与古柏掩映，是中原佛教的千年源头。'},
       {name:'老君山',emoji:'⛰️',wiki:'老君山 (栾川)',intro:'伏牛山主峰，海拔 2217 米，道教圣地。金顶道观群在云海间若隐若现，十里画屏、玻璃栈道让"远赴人间惊鸿宴"成为全网最火登山打卡。'}
     ] },
-  { id:'dunhuang', name:'敦煌', pinyin:'Dunhuang', region:'西北', description:'丝路明珠，大漠奇观', attractions:['莫高窟','鸣沙山月牙泉','玉门关'], bestSeason:'夏秋', emoji:'🏜️', color:'#d4a017', gradient:'linear-gradient(135deg,#ca8a04,#d4a017)',
+  { id:'dunhuang', name:'敦煌', pinyin:'Dunhuang', region:'西北', description:'丝路明珠，大漠奇观', attractions:['莫高窟','鸣沙山月牙泉','玉门关'], bestSeason:'夏秋', emoji:'🏜️', color:'#d4a017', gradient:'linear-gradient(135deg,#ca8a04,#d4a017)', coord:[40.1421,94.6612],
     spots:[
       {name:'莫高窟',emoji:'🕉️',wiki:'莫高窟',intro:'前秦开凿于鸣沙山的千年佛教石窟，现存 735 个洞窟、4.5 万平方米壁画与 2000 余身彩塑，是世界最大的佛教艺术宝库，1987 年首批世界文化遗产。'},
       {name:'鸣沙山月牙泉',emoji:'🌙',wiki:'鸣沙山月牙泉',intro:'沙山环抱中一弯清泉千年不涸，沙鸣如雷而泉不被掩。骑骆驼、滑沙、看日落，是丝绸之路上最梦幻的沙漠奇景。'},
       {name:'玉门关',emoji:'🧱',wiki:'玉门关',intro:'汉代边塞关城，"春风不度玉门关"传诵千年。残存的夯土城垣与汉长城、河仓城并称"河仓三城"，是丝路北道与边塞诗的地理坐标。'}
     ] },
-  { id:'urumqi', name:'乌鲁木齐', pinyin:'Urumqi', region:'西北', description:'亚心之都，丝路门户', attractions:['天山天池','国际大巴扎','红山'], bestSeason:'夏秋', emoji:'🏔️', color:'#0ea5e9', gradient:'linear-gradient(135deg,#0284c7,#0ea5e9)',
+  { id:'urumqi', name:'乌鲁木齐', pinyin:'Urumqi', region:'西北', description:'亚心之都，丝路门户', attractions:['天山天池','国际大巴扎','红山'], bestSeason:'夏秋', emoji:'🏔️', color:'#0ea5e9', gradient:'linear-gradient(135deg,#0284c7,#0ea5e9)', coord:[43.8256,87.6168],
     spots:[
       {name:'天山天池',emoji:'🏞️',wiki:'天山天池',intro:'博格达峰下的高山湖泊，海拔 1900 余米，湖水湛蓝如镜，雪峰倒映。西王母神话与哈萨克牧歌交织，是新疆最负盛名的高山避暑与滑雪胜地。'},
       {name:'国际大巴扎',emoji:'🕌',wiki:'新疆国际大巴扎',intro:'二道桥畔的世界最大巴扎（集市），23 万平方米集伊斯兰风情建筑、干果、手工艺与歌舞美食于一体，是体验维吾尔族市井与丝路商贸的最佳窗口。'},
       {name:'红山',emoji:'🪨',wiki:'红山公园',intro:'横卧市区的赭红色山体，因断崖如巨龙而得名。登远眺楼可俯瞰全城与博格达峰，是乌鲁木齐的城市绿心与落日观景地。'}
     ] },
-  { id:'hulunbeier', name:'呼伦贝尔', pinyin:'Hulunbuir', region:'华北', description:'草原天堂，牧歌之乡', attractions:['呼伦贝尔大草原','满洲里','额尔古纳'], bestSeason:'夏秋', emoji:'🌾', color:'#2ecc71', gradient:'linear-gradient(135deg,#27ae60,#2ecc71)',
+  { id:'hulunbeier', name:'呼伦贝尔', pinyin:'Hulunbuir', region:'华北', description:'草原天堂，牧歌之乡', attractions:['呼伦贝尔大草原','满洲里','额尔古纳'], bestSeason:'夏秋', emoji:'🌾', color:'#2ecc71', gradient:'linear-gradient(135deg,#27ae60,#2ecc71)', coord:[49.212,119.7572],
     spots:[
       {name:'呼伦贝尔大草原',emoji:'🌾',wiki:'呼伦贝尔大草原',intro:'世界四大草原之一，水草丰美、一望无垠。莫日格勒河如银带蜿蜒，蒙古包、牛羊与套马汉子构成"风吹草低见牛羊"的北国牧歌。'},
       {name:'满洲里',emoji:'🏰',wiki:'满洲里',intro:'中俄蒙三国交界的口岸小城，套娃广场、哥特式建筑与金色穹顶在边境夜色中流光溢彩，是草原尽头最具异域风情的打卡地。'},
       {name:'额尔古纳',emoji:'🌊',wiki:'额尔古纳市',intro:'中俄界河湿地的源头，亚洲最美湿地蜿蜒如画。白桦林、驯鹿与俄罗斯族木刻楞民居，是呼伦贝尔最静谧的边境秘境。'}
     ] },
-  { id:'taiyuan', name:'太原', pinyin:'Taiyuan', region:'华北', description:'龙城晋韵，晋商之源', attractions:['晋祠','平遥古城','乔家大院'], bestSeason:'春秋', emoji:'🏯', color:'#8e44ad', gradient:'linear-gradient(135deg,#7b2ff7,#8e44ad)',
+  { id:'taiyuan', name:'太原', pinyin:'Taiyuan', region:'华北', description:'龙城晋韵，晋商之源', attractions:['晋祠','平遥古城','乔家大院'], bestSeason:'春秋', emoji:'🏯', color:'#8e44ad', gradient:'linear-gradient(135deg,#7b2ff7,#8e44ad)', coord:[37.8706,112.5489],
     spots:[
       {name:'晋祠',emoji:'🛕',wiki:'晋祠',intro:'为纪念周武王次子叔虞而建的千年祠庙，圣母殿宋代彩塑侍女像栩栩如生，难老泉、鱼沼飞梁并称"晋祠三绝"，是现存最古老的皇家祭祀园林。'},
       {name:'平遥古城',emoji:'🏘️',wiki:'平遥古城',intro:'保存最完整的明清县城，城墙、县衙、票号（日昇昌）见证晋商辉煌。1997 年列入世界遗产，是"中国古代华尔街"活着的范本。'},
       {name:'乔家大院',emoji:'🏯',wiki:'乔家大院',intro:'祁县乔氏家族的晋商豪宅，六院十九进院落、上千间房屋，"皇家看故宫，民宅看乔家"。砖雕、彩绘与《大红灯笼高高挂》取景让它声名远扬。'}
     ] },
-  { id:'nanchang', name:'南昌', pinyin:'Nanchang', region:'华东', description:'英雄城，赣鄱明珠', attractions:['滕王阁','八一广场','鄱阳湖'], bestSeason:'春秋', emoji:'🏯', color:'#ef4444', gradient:'linear-gradient(135deg,#dc2626,#ef4444)',
+  { id:'nanchang', name:'南昌', pinyin:'Nanchang', region:'华东', description:'英雄城，赣鄱明珠', attractions:['滕王阁','八一广场','鄱阳湖'], bestSeason:'春秋', emoji:'🏯', color:'#ef4444', gradient:'linear-gradient(135deg,#dc2626,#ef4444)', coord:[28.682,115.8579],
     spots:[
       {name:'滕王阁',emoji:'🏯',wiki:'滕王阁',intro:'"落霞与孤鹜齐飞，秋水共长天一色"因王勃一篇序文而名垂千古。临赣江而建的江南名楼屡毁屡建，夜景灯光与《滕王阁序》实景演出再现盛唐气象。'},
       {name:'八一广场',emoji:'⭐',wiki:'八一广场 (南昌)',intro:'为纪念 1927 年南昌起义而建的城市中心广场，八一南昌起义纪念塔高耸。是"军旗升起的地方"，红色文化与城市休闲交织。'},
       {name:'鄱阳湖',emoji:'🦢',wiki:'鄱阳湖',intro:'中国第一大淡水湖，与赣江相连。冬季数十万只候鸟（白鹤、小天鹅）在此越冬，吴城、都昌的观鸟季是生态摄影者的天堂。'}
     ] },
-  { id:'yinchuan', name:'银川', pinyin:'Yinchuan', region:'西北', description:'塞上江南，西夏古都', attractions:['沙湖','西夏王陵','镇北堡西部影城'], bestSeason:'秋', emoji:'🏜️', color:'#d97706', gradient:'linear-gradient(135deg,#b45309,#d97706)',
+  { id:'yinchuan', name:'银川', pinyin:'Yinchuan', region:'西北', description:'塞上江南，西夏古都', attractions:['沙湖','西夏王陵','镇北堡西部影城'], bestSeason:'秋', emoji:'🏜️', color:'#d97706', gradient:'linear-gradient(135deg,#b45309,#d97706)', coord:[38.4872,106.2309],
     spots:[
       {name:'沙湖',emoji:'🏝️',wiki:'沙湖 (宁夏)',intro:'沙漠与湖水相依的奇观，芦苇丛中万鸟翔集。乘船穿行沙与水之间，既有大漠孤烟也有碧波荡漾，是"塞上江南"的最佳注脚。'},
       {name:'西夏王陵',emoji:'🏯',wiki:'西夏王陵',intro:'西夏王朝的皇家陵寝，九座帝陵如金字塔般矗立贺兰山下，"东方金字塔"神秘而苍凉，是破解西夏文字与历史的关键遗址。'},
       {name:'镇北堡西部影城',emoji:'🎬',wiki:'镇北堡西部影城',intro:'由明清夯土城堡改造的影视基地，《大话西游》《红高粱》在此诞生。黄土城墙、月亮门与西北苍茫，是"中国最美影视城"式打卡地。'}
     ] },
-  { id:'xining', name:'西宁', pinyin:'Xining', region:'西北', description:'夏都西宁，青藏门户', attractions:['青海湖','塔尔寺','茶卡盐湖'], bestSeason:'夏', emoji:'🏔️', color:'#0891b2', gradient:'linear-gradient(135deg,#0e7490,#0891b2)',
+  { id:'xining', name:'西宁', pinyin:'Xining', region:'西北', description:'夏都西宁，青藏门户', attractions:['青海湖','塔尔寺','茶卡盐湖'], bestSeason:'夏', emoji:'🏔️', color:'#0891b2', gradient:'linear-gradient(135deg,#0e7490,#0891b2)', coord:[36.6232,101.7804],
     spots:[
       {name:'青海湖',emoji:'🌊',wiki:'青海湖',intro:'中国最大内陆咸水湖，七月油菜花海环抱湛蓝湖水，骑行环湖是经典路线。鸟岛、沙岛与日出云水，是青藏高原最治愈的风景。'},
       {name:'塔尔寺',emoji:'🛕',wiki:'塔尔寺',intro:'藏传佛教格鲁派六大寺之一，宗喀巴大师诞生地。大金瓦殿金碧辉煌，"艺术三绝"（酥油花、壁画、堆绣）精美绝伦，是青海信仰与艺术的心脏。'},
       {name:'茶卡盐湖',emoji:'🧂',wiki:'茶卡盐湖',intro:'"天空之镜"，湖面如镜倒映天空与云朵，赤脚走入似行走云端。这片柴达木盆地的盐湖是青藏高原最梦幻的拍照圣地。'}
     ] },
   // === 高频二线城市补充：让"佛/珠/甬/锡/绍/榕/济/连"单字也能命中本地 ===
-  { id:'foshan', name:'佛山', pinyin:'Foshan', region:'华南', description:'岭南名镇，功夫之城', attractions:['祖庙','岭南天地','清晖园'], bestSeason:'春秋', emoji:'🏛️', color:'#e67e22', gradient:'linear-gradient(135deg,#d35400,#e67e22)',
+  { id:'foshan', name:'佛山', pinyin:'Foshan', region:'华南', description:'岭南名镇，功夫之城', attractions:['祖庙','岭南天地','清晖园'], bestSeason:'春秋', emoji:'🏛️', color:'#e67e22', gradient:'linear-gradient(135deg,#d35400,#e67e22)', coord:[23.0218,113.1219],
     spots:[
       {name:'祖庙',emoji:'🏛️',wiki:'佛山祖庙',intro:'供奉北方真武玄天上帝的明清古建筑群，黄飞鸿纪念馆、叶问堂集聚，是佛山武术与粤剧文化的精神祖庭。'},
       {name:'岭南天地',emoji:'🏘️',wiki:'岭南天地',intro:'以岭南古街巷为骨，融合现代商业的开放式街区。青砖瓦房与时尚店铺相映，是佛山最国际范的休闲地标。'},
       {name:'清晖园',emoji:'🌿',wiki:'清晖园',intro:'广东四大名园之一，明代龙氏世居之地。亭台水榭、小桥流水、木石竹雕，处处是岭南园林的精致与温婉。'}
     ] },
-  { id:'zhuhai', name:'珠海', pinyin:'Zhuhai', region:'华南', description:'浪漫之城，百岛之市', attractions:['情侣路','圆明新园','外伶仃岛'], bestSeason:'春秋', emoji:'🏖️', color:'#16a085', gradient:'linear-gradient(135deg,#0e7e7e,#16a085)',
+  { id:'zhuhai', name:'珠海', pinyin:'Zhuhai', region:'华南', description:'浪漫之城，百岛之市', attractions:['情侣路','圆明新园','外伶仃岛'], bestSeason:'春秋', emoji:'🏖️', color:'#16a085', gradient:'linear-gradient(135deg,#0e7e7e,#16a085)', coord:[22.271,113.5767],
     spots:[
       {name:'情侣路',emoji:'🌅',wiki:'情侣路',intro:'珠海最浪漫的城市海岸线，全长55公里串起渔女、香洲湾、海滨公园，骑双人单车俯瞰南海是来珠海必打卡。'},
       {name:'圆明新园',emoji:'🏯',wiki:'圆明新园',intro:'按1:1比例复刻北京圆明园精华（18景）的皇家园林主题公园，依山傍海，是珠海第一座大型历史文化景区。'},
       {name:'外伶仃岛',emoji:'🏝️',wiki:'外伶仃岛',intro:'万山群岛中具代表性的海岛，登山俯瞰伶仃洋、看"一国两制"分界线，是珠海人最爱的海岛度假地。'}
     ] },
-  { id:'dongguan', name:'东莞', pinyin:'Dongguan', region:'华南', description:'制造名城，活力之城', attractions:['可园','鸦片战争博物馆','松山湖'], bestSeason:'春秋', emoji:'🏭', color:'#f39c12', gradient:'linear-gradient(135deg,#e67e22,#f39c12)',
+  { id:'dongguan', name:'东莞', pinyin:'Dongguan', region:'华南', description:'制造名城，活力之城', attractions:['可园','鸦片战争博物馆','松山湖'], bestSeason:'春秋', emoji:'🏭', color:'#f39c12', gradient:'linear-gradient(135deg,#e67e22,#f39c12)', coord:[23.0207,113.7518],
     spots:[
       {name:'可园',emoji:'🌿',wiki:'可园',intro:'广东四大名园之一，张敬修私人花园邀山阁、双清室精巧雅致，是岭南"小园极致"风格的代表。'},
       {name:'鸦片战争博物馆',emoji:'🏛️',wiki:'虎门鸦片战争博物馆',intro:'林则徐销烟旧址，"虎门销烟"见证地。威远炮台古炮与历史文物，让人重温近代史最壮烈的开端。'},
       {name:'松山湖',emoji:'🌊',wiki:'松山湖',intro:'国家级高新区里的生态湖区，华为欧洲小镇坐落湖畔。骑行、跑步、皮划艇，周边是科技与自然融合的现代景区。'}
     ] },
-  { id:'wuxi', name:'无锡', pinyin:'Wuxi', region:'华东', description:'太湖明珠，吴文化发源地', attractions:['鼋头渚','灵山胜境','惠山古镇'], bestSeason:'春秋', emoji:'🌸', color:'#ec407a', gradient:'linear-gradient(135deg,#d81b60,#ec407a)', aliases:['锡'],
+  { id:'wuxi', name:'无锡', pinyin:'Wuxi', region:'华东', description:'太湖明珠，吴文化发源地', attractions:['鼋头渚','灵山胜境','惠山古镇'], bestSeason:'春秋', emoji:'🌸', color:'#ec407a', gradient:'linear-gradient(135deg,#d81b60,#ec407a)', aliases:['锡'], coord:[31.4912,120.3119],
     spots:[
       {name:'鼋头渚',emoji:'🌸',wiki:'鼋头渚',intro:'太湖西北岸伸入湖中的半岛，每年三月底数万株樱花如雪，被誉"世界三大赏樱胜地"之一。'},
       {name:'灵山胜境',emoji:'🗿',wiki:'灵山胜境',intro:'88米高的灵山大佛矗立湖畔，梵宫金碧辉煌。九龙灌浴大型动态铜群雕是佛教艺术杰作。'},
       {name:'惠山古镇',emoji:'🏘️',wiki:'惠山古镇',intro:'118座历代祠堂串联的古街，惠山泥人、豆腐花、无锡小笼包是江南水乡最生活的气息。'}
     ] },
-  { id:'ningbo', name:'宁波', pinyin:'Ningbo', region:'华东', description:'港通天下，书香悠远', attractions:['天一阁博物馆','老外滩','普陀山'], bestSeason:'春秋', emoji:'⛵', color:'#0288d1', gradient:'linear-gradient(135deg,#01579b,#0288d1)', aliases:['甬'],
+  { id:'ningbo', name:'宁波', pinyin:'Ningbo', region:'华东', description:'港通天下，书香悠远', attractions:['天一阁博物馆','老外滩','普陀山'], bestSeason:'春秋', emoji:'⛵', color:'#0288d1', gradient:'linear-gradient(135deg,#01579b,#0288d1)', aliases:['甬'], coord:[29.8683,121.544],
     spots:[
       {name:'天一阁博物馆',emoji:'📚',wiki:'天一阁',intro:'中国现存最古老的私家藏书楼，明代范钦所建。"南国书城"三十六万卷明清刻本，是读书人的朝圣地。'},
       {name:'老外滩',emoji:'🌃',wiki:'宁波老外滩',intro:'比上海外滩还早20年的中国最早"外滩"，欧式老建筑与现代酒吧、餐厅融合，是宁波夜生活的中心。'},
       {name:'普陀山',emoji:'🛕',wiki:'普陀山',intro:'中国佛教四大名山之一，观音菩萨道场。海天佛国、潮音古洞，是华东最具灵性的海岛佛教圣地。'}
     ] },
-  { id:'shaoxing', name:'绍兴', pinyin:'Shaoxing', region:'华东', description:'鲁迅故里，水乡古城', attractions:['鲁迅故里','沈园','兰亭'], bestSeason:'春秋', emoji:'🍶', color:'#7b2d8e', gradient:'linear-gradient(135deg,#5b2c6f,#7b2d8e)',
+  { id:'shaoxing', name:'绍兴', pinyin:'Shaoxing', region:'华东', description:'鲁迅故里，水乡古城', attractions:['鲁迅故里','沈园','兰亭'], bestSeason:'春秋', emoji:'🍶', color:'#7b2d8e', gradient:'linear-gradient(135deg,#5b2c6f,#7b2d8e)', coord:[30.0023,120.581],
     spots:[
       {name:'鲁迅故里',emoji:'📖',wiki:'鲁迅故里',intro:'百草园、三味书屋原貌保留，乌篷船、绍兴黄酒、香糕臭豆腐，是从课本走进现实的江南文脉之旅。'},
       {name:'沈园',emoji:'🌸',wiki:'沈园',intro:'南宋陆游与唐婉《钗头凤》题壁处，江南古典园林典范，与古人隔池塘咏唱钗头凤，是爱情诗的伤心园。'},
       {name:'兰亭',emoji:'🖌️',wiki:'兰亭',intro:'王羲之《兰亭集序》诞生地，曲水流觞、茂林修竹。每年书法节重现千年雅集，是书法人必经之处。'}
     ] },
-  { id:'fuzhou', name:'福州', pinyin:'Fuzhou', region:'华东', description:'有福之州，温泉闽都', attractions:['三坊七巷','鼓山','平潭岛'], bestSeason:'春秋冬', emoji:'🌳', color:'#16a34a', gradient:'linear-gradient(135deg,#15803d,#16a34a)', aliases:['榕'],
+  { id:'fuzhou', name:'福州', pinyin:'Fuzhou', region:'华东', description:'有福之州，温泉闽都', attractions:['三坊七巷','鼓山','平潭岛'], bestSeason:'春秋冬', emoji:'🌳', color:'#16a34a', gradient:'linear-gradient(135deg,#15803d,#16a34a)', aliases:['榕'], coord:[26.0745,119.2965],
     spots:[
       {name:'三坊七巷',emoji:'🏘️',wiki:'三坊七巷',intro:'明清古建筑群，被誉为"中国城市里坊制度活化石"。林则徐、严复、冰心故居散布坊巷，是闽都文化核心。'},
       {name:'鼓山',emoji:'⛰️',wiki:'鼓山',intro:'福州东郊第一名山，涌泉寺千年古刹、十八景山径。登高眺望闽江口，是周末登山的经典路线。'},
       {name:'平潭岛',emoji:'🏝️',wiki:'平潭岛',intro:'福建第一大岛，"蓝眼泪"奇观每年春夏在海湾闪烁。石头厝渔村、东海仙境，是闽东最浪漫的海岛。'}
     ] },
-  { id:'jinan', name:'济南', pinyin:'Jinan', region:'华东', description:'泉城济南，天下泉都', attractions:['趵突泉','大明湖','千佛山'], bestSeason:'春秋', emoji:'⛲', color:'#0ea5e9', gradient:'linear-gradient(135deg,#0284c7,#0ea5e9)',
+  { id:'jinan', name:'济南', pinyin:'Jinan', region:'华东', description:'泉城济南，天下泉都', attractions:['趵突泉','大明湖','千佛山'], bestSeason:'春秋', emoji:'⛲', color:'#0ea5e9', gradient:'linear-gradient(135deg,#0284c7,#0ea5e9)', coord:[36.6512,117.1201],
     spots:[
       {name:'趵突泉',emoji:'⛲',wiki:'趵突泉',intro:'济南72名泉之首，被誉为"天下第一泉"。三股水昼夜喷涌，李清照故宅在侧，名副其实的泉城灵魂。'},
       {name:'大明湖',emoji:'🛶',wiki:'大明湖',intro:'由众泉汇聚而成的城中湖，荷花映柳、夏雨荷亭。"蛇不见、蛙不鸣"的独特生态令古人生出诸多遐想。'},
       {name:'千佛山',emoji:'🏯',wiki:'千佛山',intro:'隋开皇年间依山势雕凿数千佛像而成的佛教名山，与趵突泉、大明湖并称济南三大名胜。'}
     ] },
-  { id:'dalian', name:'大连', pinyin:'Dalian', region:'东北', description:'北方明珠，浪漫海滨', attractions:['老虎滩海洋公园','星海广场','金石滩'], bestSeason:'夏秋', emoji:'🦭', color:'#06b6d4', gradient:'linear-gradient(135deg,#0891b2,#06b6d4)',
+  { id:'dalian', name:'大连', pinyin:'Dalian', region:'东北', description:'北方明珠，浪漫海滨', attractions:['老虎滩海洋公园','星海广场','金石滩'], bestSeason:'夏秋', emoji:'🦭', color:'#06b6d4', gradient:'linear-gradient(135deg,#0891b2,#06b6d4)', coord:[38.914,121.6147],
     spots:[
       {name:'老虎滩海洋公园',emoji:'🐬',wiki:'老虎滩海洋公园',intro:'国家级海洋主题公园，珊瑚馆、极地馆、海兽馆与鸟语林串联，是东北最具规模的海滨观光胜地。'},
       {name:'星海广场',emoji:'🌊',wiki:'星海广场',intro:'亚洲最大城市广场，毗邻星海公园与百年城雕，跨海大桥、星海湾是俯瞰大连海岸的最佳视角。'},
@@ -716,7 +716,7 @@ async function selectCity(cityId) {
   renderAdvice(weather);
 
   // 24h + 7 天：优先 Open-Meteo（每 1 小时 24 点 + 7 天），失败回退 wttr.in
-  var ext = await fetchExtendedForecast(city.name);
+  var ext = await fetchExtendedForecast(city);
   var parsed = ext ? parseExtendedForecast(ext) : null;
   if (parsed && parsed.hourly && parsed.hourly.length >= 20) {
     renderHourly(parsed);
@@ -1702,20 +1702,33 @@ function formatTimeShort(iso) {
   return m ? m[1] : iso;
 }
 
-/* Open-Meteo 24h + 7 天扩展预告（无需 key） */
-async function fetchExtendedForecast(cityName) {
+/* Open-Meteo 24h + 7 天扩展预告（无需 key）
+   接受 city 对象：{ name, pinyin, coord:[lat,lon] }
+   - 优先用预置 coord（destinations 精选城已有，零误差）
+   - fallback：用拼音去 Open-Meteo geocoding（避免中文搜错到同名小镇）
+*/
+async function fetchExtendedForecast(city) {
   try {
-    var c1 = new AbortController();
-    var t1 = setTimeout(function() { c1.abort(); }, 5000);
-    var geoResp = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(cityName) + '&count=1&language=zh&country=CN', { signal: c1.signal });
-    clearTimeout(t1);
-    if (!geoResp.ok) return null;
-    var geo = await geoResp.json();
-    if (!geo.results || !geo.results.length) return null;
-    var loc = geo.results[0];
+    var query = (city && city.pinyin) ? city.pinyin : ((city && city.name) ? city.name : '');
+    if (!query) return null;
+    var lat = city && Array.isArray(city.coord) ? city.coord[0] : null;
+    var lon = city && Array.isArray(city.coord) ? city.coord[1] : null;
+    // 1) 优先用预置坐标（最准，避开 Open-Meteo 中文 geocoding 的乱匹配）
+    if (lat == null || lon == null) {
+      var c1 = new AbortController();
+      var t1 = setTimeout(function() { c1.abort(); }, 5000);
+      var geoResp = await fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(query) + '&count=1&language=en', { signal: c1.signal });
+      clearTimeout(t1);
+      if (!geoResp.ok) return null;
+      var geo = await geoResp.json();
+      if (!geo.results || !geo.results.length) return null;
+      var loc = geo.results[0];
+      lat = loc.latitude;
+      lon = loc.longitude;
+    }
     var c2 = new AbortController();
     var t2 = setTimeout(function() { c2.abort(); }, 6000);
-    var fcUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + loc.latitude + '&longitude=' + loc.longitude +
+    var fcUrl = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon +
       '&hourly=weather_code,temperature_2m,precipitation_probability' +
       '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset,uv_index_max' +
       '&forecast_days=7&timezone=auto';
@@ -1830,7 +1843,20 @@ async function showWeatherForPlace(q) {
   renderAdvice(weather);
 
   // 24h + 7 天：优先 Open-Meteo，失败回退 wttr.in
-  var ext = await fetchExtendedForecast(q);
+  // 先在 destinations 里查 q（中文或拼音/英文 id），命中就用预置坐标
+  var matchedCity = null;
+  try {
+    var qLower = String(q).toLowerCase();
+    for (var i = 0; i < destinations.length; i++) {
+      var d = destinations[i];
+      if (d.id === qLower || d.name === q || d.pinyin === q || (d.aliases && d.aliases.indexOf(q) >= 0)) {
+        matchedCity = d;
+        break;
+      }
+    }
+  } catch (e) {}
+  var extCity = matchedCity || { name: q, pinyin: q };
+  var ext = await fetchExtendedForecast(extCity);
   var parsed = ext ? parseExtendedForecast(ext) : null;
   if (parsed && parsed.hourly && parsed.hourly.length >= 20) {
     renderHourly(parsed);
