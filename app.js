@@ -4736,6 +4736,7 @@ function init() {
   prefetchSpotImages();
   setupReveal();
   setupHeroMouseGlow();
+  setupHeroParticles();
   console.log('✦ 云游中国 - 智能旅行助手已启动');
   console.log('✦ Agent 架构：感知(天气API) → 推理(建议引擎) → 行动(推荐输出)');
 }
@@ -4758,6 +4759,111 @@ function setupHeroMouseGlow() {
       bg.style.setProperty('--my', y + '%');
     });
   });
+}
+
+/* 首屏背景星尘粒子：缓慢漂浮 + 轻微闪烁，鼠标经过时轻轻避让并微亮（位于内容与背景之间） */
+function setupHeroParticles() {
+  var hero = document.getElementById('hero');
+  if (!hero) return;
+  var canvas = document.createElement('canvas');
+  canvas.className = 'hero-particles';
+  hero.appendChild(canvas);
+  var ctx = canvas.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0, particles = [];
+  var mouse = { x: -9999, y: -9999, active: false };
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var REPEL_R = 110;
+
+  function initParticles() {
+    var count = Math.max(44, Math.min(120, Math.round(W * H / 14000)));
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      var cyan = Math.random() < 0.25;
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 0.6 + Math.random() * 1.7,
+        base: 0.12 + Math.random() * 0.38,
+        vx: (Math.random() - 0.5) * 0.16,
+        vy: (Math.random() - 0.5) * 0.16,
+        sx: 0, sy: 0,
+        phase: Math.random() * Math.PI * 2,
+        cyan: cyan
+      });
+    }
+  }
+
+  function resize() {
+    var r = hero.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    initParticles();
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -12) p.x = W + 12; else if (p.x > W + 12) p.x = -12;
+      if (p.y < -12) p.y = H + 12; else if (p.y > H + 12) p.y = -12;
+
+      var dx = p.x - mouse.x, dy = p.y - mouse.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var tox = 0, toy = 0, boost = 0;
+      if (mouse.active && dist < REPEL_R && dist > 0.01) {
+        var force = (REPEL_R - dist) / REPEL_R;
+        tox = (dx / dist) * force * 26;
+        toy = (dy / dist) * force * 26;
+        boost = force * 0.55;
+      }
+      // 平滑避让，避免鼠标离开时突跳
+      p.sx += (tox - p.sx) * 0.18;
+      p.sy += (toy - p.sy) * 0.18;
+
+      var tw = 0.72 + 0.28 * Math.sin(t * 0.0012 + p.phase);
+      var alpha = Math.min(1, p.base * tw + boost);
+      var rr = p.r * (1 + boost * 0.8);
+      var px = p.x + p.sx, py = p.y + p.sy;
+
+      ctx.globalAlpha = alpha;
+      if (boost > 0.06 || p.cyan) {
+        ctx.shadowColor = p.cyan ? 'rgba(56,189,248,0.85)' : 'rgba(255,255,255,0.8)';
+        ctx.shadowBlur = boost > 0.06 ? 9 : 4;
+      } else {
+        ctx.shadowBlur = 0;
+      }
+      ctx.fillStyle = p.cyan ? '#bdeaff' : '#ffffff';
+      ctx.beginPath();
+      ctx.arc(px, py, rr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  var start = performance.now();
+  function loop(now) {
+    draw(now - start);
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('mousemove', function(e) {
+    var r = hero.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    if (x >= 0 && x <= W && y >= 0 && y <= H) { mouse.x = x; mouse.y = y; mouse.active = true; }
+    else { mouse.active = false; }
+  }, { passive: true });
+  hero.addEventListener('mouseleave', function() { mouse.active = false; });
+
+  resize();
+  if (reduced) { draw(0); } else { requestAnimationFrame(loop); }
 }
 
 /* 滚动进入视口时淡入上移，减弱页面静态感 */

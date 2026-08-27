@@ -787,7 +787,15 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
 }
 
-/* 鼠标划过背景的特效由 JS 动态注入（见 setupHeroPassEffect） */
+/* 首屏背景星尘粒子：缓慢漂浮，鼠标经过时轻轻避让并微亮（JS 动态注入 canvas） */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
 
 .hero-scroll {
   position: absolute;
