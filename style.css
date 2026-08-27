@@ -659,6 +659,7 @@ img { max-width: 100%; display: block; }
 .hero-search {
   display: flex;
   gap: 0;
+  position: relative;
   max-width: 540px;
   margin: 0 auto var(--sp-10);
   background: var(--glass-search);
@@ -730,6 +731,7 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   align-items: center;
   gap: 3px;
+  position: relative;
   padding: var(--sp-2) var(--sp-5);
   border-radius: var(--radius-lg);
   background: var(--glass-stat);
@@ -785,6 +787,45 @@ img { max-width: 100%; display: block; }
   width: 1px;
   height: 26px;
   background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+}
+
+/* 鼠标划过：流星光带（亮头 + 拖尾，沿运动方向跟随光标） */
+.meteor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 6px;
+  margin: -3px 0 0 -60px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0) 8%, rgba(255, 255, 255, 0.85) 90%, #fff 100%);
+  filter: blur(1.5px) drop-shadow(0 0 10px rgba(56, 189, 248, 0.7));
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(-20deg);
+  transition: opacity var(--dur-normal) var(--ease-out);
+  z-index: 4;
+}
+
+.meteor::before {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0.7) 40%, transparent 70%);
+  box-shadow: 0 0 14px 5px rgba(255, 255, 255, 0.55), 0 0 28px 10px rgba(56, 189, 248, 0.4);
+}
+
+.meteor.is-on {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meteor { display: none; }
 }
 
 .hero-scroll {

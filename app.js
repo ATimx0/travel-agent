@@ -4736,6 +4736,7 @@ function init() {
   prefetchSpotImages();
   setupReveal();
   setupHeroMouseGlow();
+  setupMeteorStreak();
   console.log('✦ 云游中国 - 智能旅行助手已启动');
   console.log('✦ Agent 架构：感知(天气API) → 推理(建议引擎) → 行动(推荐输出)');
 }
@@ -4756,6 +4757,40 @@ function setupHeroMouseGlow() {
       var y = ((e.clientY - r.top) / r.height) * 100;
       bg.style.setProperty('--mx', x + '%');
       bg.style.setProperty('--my', y + '%');
+    });
+  });
+}
+
+/* 首屏搜索框/统计卡：鼠标划过浮现"流星"光带（亮头+拖尾，沿运动方向跟随光标） */
+function setupMeteorStreak() {
+  var targets = document.querySelectorAll('.hero-search, .stat');
+  targets.forEach(function(el) {
+    if (!el) return;
+    var m = document.createElement('span');
+    m.className = 'meteor';
+    el.appendChild(m);
+    var raf = null, x = 0, y = 0, lastX = null, lastY = null, angle = -20, on = false;
+    el.addEventListener('mousemove', function(e) {
+      var r = el.getBoundingClientRect();
+      x = e.clientX - r.left;
+      y = e.clientY - r.top;
+      if (lastX !== null) {
+        var dx = x - lastX, dy = y - lastY;
+        if (dx || dy) angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      }
+      lastX = x; lastY = y;
+      if (!raf) raf = requestAnimationFrame(function() {
+        raf = null;
+        m.style.left = x + 'px';
+        m.style.top = y + 'px';
+        m.style.transform = 'rotate(' + angle + 'deg)';
+        if (!on) { m.classList.add('is-on'); on = true; }
+      });
+    });
+    el.addEventListener('mouseleave', function() {
+      on = false;
+      lastX = null; lastY = null;
+      m.classList.remove('is-on');
     });
   });
 }
