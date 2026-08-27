@@ -687,6 +687,13 @@ img { max-width: 100%; display: block; }
   font-family: var(--font-sans);
   padding: var(--sp-3) var(--sp-5);
   letter-spacing: var(--ls-normal);
+  outline: none;
+}
+
+/* 鼠标点击 input 时显式抑制浏览器默认焦点环（不破坏 Tab 键盘可达性） */
+.hero-search input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .hero-search input::placeholder {
