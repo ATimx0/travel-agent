@@ -1726,8 +1726,8 @@ function formatTimeShort(iso) {
 }
 
 /* 统一坐标解析：预置 coord → 拼音 Open-Meteo → 高德兜底。
-   返回 [lng, lat] 或 null。实时卡(wttr.in)与 7 天卡(Open-Meteo)共用，
-   保证两路用的是同一坐标，绝不一致 / 跨城市错配。 */
+   返回 [lat, lng]（与 cityCoords 预置格式一致）；实时卡(wttr.in)与 7 天卡(Open-Meteo)共用。
+   对地图/路径 API 调用须经 coordOf(c) 翻为 [lng, lat]。 */
 async function resolveCoord(city) {
   if (city && Array.isArray(city.coord) && city.coord.length === 2) return city.coord;
   var py = (city && city.pinyin) ? city.pinyin : '';
@@ -2011,7 +2011,7 @@ async function initMap() {
       viewMode: '3D'
     });
     destinations.forEach(function(d) {
-      var coord = cityCoords[d.id];
+      var coord = coordOf(d);
       if (!coord) return;
       var markerContent =
         '<div class="city-marker" data-id="' + d.id + '">' +
@@ -2454,9 +2454,13 @@ function cityById(id) {
   return destinations.find(function(d) { return d.id === id; });
 }
 
+/* 单一出口：所有「喂给 AMap / buildWavyPath / haversineKm」的坐标都从这里取。
+ * 数据语义：内部存储统一 [lat, lng]（保护 cityCoords 预置 + 天气板块 fetchExtendedForecast）；
+ * 但地图 / 路径 API 全部期望 [lng, lat] —— 所以这里统一翻一次。 */
 function coordOf(c) {
   if (!c) return null;
-  return c.coord || (cityCoords[c.id] || null);
+  var cd = c.coord || cityCoords[c.id];
+  return cd ? [cd[1], cd[0]] : null;   // [lat, lng] → [lng, lat]
 }
 
 /* 高德地理编码：把任意地点名转成坐标 */
@@ -3020,6 +3024,7 @@ function countLights(steps) {
 /* 主入口：优先高德真实路线，失败回退本地估算 */
 async function planTrip(start, end, mode, pref) {
   // 补全缺失坐标：全国库/景点库命中但无预置坐标时，用浏览器端高德 geocode 按需获取
+  // c.coord 字段统一存 [lat, lng]；coordOf 出口统一翻成 [lng, lat]
   if (!coordOf(start)) { var cs = await geocodePlace(start.__spotName || start.name); if (cs) start.coord = cs; }
   if (!coordOf(end))   { var ce = await geocodePlace(end.__spotName || end.name);   if (ce) end.coord = ce; }
   var real = null;
@@ -3116,15 +3121,20 @@ function bindStepsToggle(stepsEl, btn) {
 /* 多地点行程：起点 + 途经点 + 终点，按地理就近排序并给出逐段交通与时间线 */
 async function planItinerary(startCity, endCity, waypointLabels, mode) {
   var stops = [];
-  if (startCity) stops.push({ name: startCity.name, coord: coordOf(startCity), kind: 'start' });
+  // c.coord 字段统一存 [lat, lng]（与 cityCoords 一致）；coordOf() 是对地图/路径 API 的出口
+  if (startCity) {
+    var sc = startCity.coord || cityCoords[startCity.id];
+    if (sc) stops.push({ name: startCity.name, coord: sc.slice(), kind: 'start' });
+  }
   for (var i = 0; i < waypointLabels.length; i++) {
     var label = waypointLabels[i];
     var coord = await geocodePlace(label);
-    if (!coord) coord = startCity ? coordOf(startCity).slice() : [116.397, 39.908];
+    if (!coord) coord = startCity ? (startCity.coord || cityCoords[startCity.id]).slice() : [39.908, 116.397];   // default [lat, lng]
     stops.push({ name: label, coord: coord, kind: 'wp' });
   }
   if (endCity && (!startCity || endCity.id !== startCity.id)) {
-    stops.push({ name: endCity.name, coord: coordOf(endCity), kind: 'end' });
+    var ec = endCity.coord || cityCoords[endCity.id];
+    if (ec) stops.push({ name: endCity.name, coord: ec.slice(), kind: 'end' });
   }
   if (stops.length < 2) throw new Error('至少需要起点和终点');
 
@@ -3174,8 +3184,8 @@ async function planItinerary(startCity, endCity, waypointLabels, mode) {
   if (polyline.length < 2) {
     polyline = [];
     for (var p = 0; p < order.length - 1; p++) {
-      polyline.push(order[p].coord);
-      polyline.push(order[p + 1].coord);
+      polyline.push(coordOf(order[p]));                // [lat, lng] → [lng, lat] 喂给下游 AMap
+      polyline.push(coordOf(order[p + 1]));
     }
   }
 
@@ -3389,7 +3399,7 @@ async function runNearby(city) {
   var box = document.getElementById('routeNearby');
   if (!box) return;
   box.innerHTML = '<div class="route-loading">🔍 正在搜索 ' + city.name + ' 周边…</div>';
-  var coord = city.coord || (cityCoords[city.id] || [116.397, 39.908]);
+  var coord = coordOf(city) || [116.397, 39.908];
   var cats = [
     { key:'food', label:'🍜 美食饭店', kw:'餐饮' },
     { key:'mall', label:'🛍️ 商场购物', kw:'购物中心' },
@@ -3935,7 +3945,7 @@ function drawRouteByMode(start, end, strategy, order, plan) {
   } else if (order && order.length > 1) {
     // 多地点（无真实 path）：按 order 全节点顺序画一条折线
     path = order.map(function(p) {
-      var c = p.coord || coordOf({ id: p.id });
+      var c = coordOf(p);                              // 统一 [lng, lat] 出口
       return new AMap.LngLat(c[0], c[1]);
     });
   } else {
@@ -4144,8 +4154,8 @@ async function setRouteEndpoint(cityObj) {
 
 async function mapPickPoint(lnglat) {
   if (!routePickMode) return;
-  var coord = [lnglat.getLng(), lnglat.getLat()];
-  var name = await reverseGeocode(coord);
+  var coord = [lnglat.getLat(), lnglat.getLng()];    // 统一存 [lat, lng]，由 coordOf 出口翻 [lng, lat]
+  var name = await reverseGeocode([lnglat.getLng(), lnglat.getLat()]);
   setRouteEndpoint({ id: 'custom-' + Date.now(), name: name, coord: coord, custom: true });
 }
 
@@ -4255,7 +4265,7 @@ function bindRouteEvents() {
       var lng = pos.coords.longitude, lat = pos.coords.latitude;
       reverseGeocode([lng, lat]).then(function(addr) {
         var name = (addr && addr !== '自定义点') ? addr : '我的位置';
-        routeStartCity = { id: 'loc-' + Date.now(), name: name, coord: [lng, lat], __custom: true, __loc: true };
+        routeStartCity = { id: 'loc-' + Date.now(), name: name, coord: [lat, lng], __custom: true, __loc: true };
         syncRouteSelects();
         locateBtn.disabled = false; locateBtn.textContent = '📍';
         showToast('已使用我的位置作为起点：' + name, 'success');
@@ -4358,7 +4368,7 @@ async function processMultiRouteQuery(start, end, waypointLabels) {
 /* 聊天里问"XX 周边有什么" */
 async function processNearbyQuery(city) {
   removeLoadingMessage();
-  var coord = city.coord || (cityCoords[city.id] || [116.397, 39.908]);
+  var coord = coordOf(city) || [116.397, 39.908];
   var cats = [
     { label: '🍜 美食饭店', kw: '餐饮' },
     { label: '🛍️ 商场购物', kw: '购物中心' },
