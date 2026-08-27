@@ -792,30 +792,31 @@ img { max-width: 100%; display: block; }
   position: absolute;
   top: 0;
   left: 0;
-  width: 180px;
-  height: 5px;
-  margin: -2.5px 0 0 -90px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.5) 72%, rgba(255, 255, 255, 0.95) 92%, #fff 100%);
-  filter: blur(1.5px) drop-shadow(0 0 14px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 26px rgba(56, 189, 248, 0.45));
+  width: 260px;
+  height: 4px;
+  margin: -2px 0 0 -130px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 20%, rgba(255, 255, 255, 0.18) 45%, rgba(255, 255, 255, 0.36) 70%, rgba(255, 255, 255, 0.68) 92%, rgba(255, 255, 255, 0.95) 100%);
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.45));
   opacity: 0;
   pointer-events: none;
   transform: rotate(-20deg);
-  transition: opacity var(--dur-normal) var(--ease-out);
+  transition: opacity 500ms var(--ease-out);
   z-index: 0;
+  will-change: transform, left, top;
 }
 
 .meteor::before {
   content: "";
   position: absolute;
-  right: -3px;
+  right: -2px;
   top: 50%;
-  width: 11px;
-  height: 11px;
-  margin-top: -5.5px;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0.7) 40%, transparent 70%);
-  box-shadow: 0 0 14px 5px rgba(255, 255, 255, 0.55), 0 0 28px 10px rgba(56, 189, 248, 0.4);
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(56, 189, 248, 0.55);
 }
 
 .meteor.is-on {
