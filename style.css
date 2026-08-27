@@ -143,6 +143,12 @@ textarea:focus-visible {
   --glass-stat-border: rgba(255, 255, 255, 0.16);
   --glass-stat-hover: rgba(255, 255, 255, 0.16);
 
+  /* 搜索框专用：同样通透，比统计卡略多一点存在感 */
+  --glass-search: rgba(255, 255, 255, 0.12);
+  --glass-search-border: rgba(255, 255, 255, 0.2);
+  --glass-search-focus: rgba(255, 255, 255, 0.2);
+  --glass-search-border-focus: rgba(255, 255, 255, 0.4);
+
   /* Elevation 五级（柔和漫射，不用生硬黑边） */
   --elev-1: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.03);
   --elev-2: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
@@ -215,6 +221,10 @@ textarea:focus-visible {
     --glass-stat: rgba(255, 255, 255, 0.05);
     --glass-stat-border: rgba(255, 255, 255, 0.12);
     --glass-stat-hover: rgba(255, 255, 255, 0.1);
+    --glass-search: rgba(255, 255, 255, 0.06);
+    --glass-search-border: rgba(255, 255, 255, 0.14);
+    --glass-search-focus: rgba(255, 255, 255, 0.12);
+    --glass-search-border-focus: rgba(56, 189, 248, 0.4);
     --elev-1: 0 1px 2px rgba(0, 0, 0, 0.4);
     --elev-2: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
     --elev-3: 0 12px 28px -6px rgba(0, 0, 0, 0.6), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
@@ -651,19 +661,19 @@ img { max-width: 100%; display: block; }
   gap: 0;
   max-width: 540px;
   margin: 0 auto var(--sp-10);
-  background: var(--glass-2);
+  background: var(--glass-search);
   backdrop-filter: var(--glass-blur-2);
   -webkit-backdrop-filter: var(--glass-blur-2);
-  border: 1px solid var(--glass-border-2);
+  border: 1px solid var(--glass-search-border);
   border-radius: var(--radius-full);
   padding: var(--sp-1);
-  box-shadow: var(--glass-highlight), 0 8px 32px -8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--glass-highlight), 0 8px 32px -8px rgba(0, 0, 0, 0.25);
   transition: all var(--dur-normal) var(--ease-out);
 }
 
 .hero-search:focus-within {
-  background: var(--glass-3);
-  border-color: rgba(255, 255, 255, 0.7);
+  background: var(--glass-search-focus);
+  border-color: var(--glass-search-border-focus);
   box-shadow: var(--glass-highlight), 0 12px 40px -8px rgba(56, 189, 248, 0.35), 0 0 0 4px rgba(56, 189, 248, 0.12);
   transform: translateY(-2px);
 }
@@ -684,21 +694,23 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-search button {
-  background: #fff;
-  color: var(--c-primary);
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
   font-size: var(--fs-6);
   font-weight: var(--fw-semibold);
   padding: var(--sp-3) var(--sp-8);
   border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   transition: all var(--dur-fast) var(--ease-spring);
   letter-spacing: var(--ls-normal);
 }
 
 .hero-search button:hover {
-  background: linear-gradient(135deg, var(--c-secondary), #fb923c);
+  background: linear-gradient(135deg, #38bdf8, #d4a574);
   color: #fff;
+  border-color: transparent;
   transform: scale(1.04);
-  box-shadow: 0 6px 20px -4px rgba(249, 115, 22, 0.5);
+  box-shadow: 0 6px 20px -4px rgba(56, 189, 248, 0.5);
 }
 
 .hero-search button:active {
