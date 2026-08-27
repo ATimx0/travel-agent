@@ -787,45 +787,7 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
 }
 
-/* 鼠标划过背景：流星光带（亮头 + 拖尾，沿运动方向跟随光标，位于内容与背景之间） */
-.meteor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 260px;
-  height: 4px;
-  margin: -2px 0 0 -130px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 20%, rgba(255, 255, 255, 0.18) 45%, rgba(255, 255, 255, 0.36) 70%, rgba(255, 255, 255, 0.68) 92%, rgba(255, 255, 255, 0.95) 100%);
-  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.45));
-  opacity: 0;
-  pointer-events: none;
-  transform: rotate(-20deg);
-  transition: opacity 500ms var(--ease-out);
-  z-index: 0;
-  will-change: transform, left, top;
-}
-
-.meteor::before {
-  content: "";
-  position: absolute;
-  right: -2px;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  margin-top: -3px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 6px 2px rgba(56, 189, 248, 0.55);
-}
-
-.meteor.is-on {
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .meteor { display: none; }
-}
+/* 鼠标划过背景的特效由 JS 动态注入（见 setupHeroPassEffect） */
 
 .hero-scroll {
   position: absolute;

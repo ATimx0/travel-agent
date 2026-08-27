@@ -4736,7 +4736,6 @@ function init() {
   prefetchSpotImages();
   setupReveal();
   setupHeroMouseGlow();
-  setupMeteorStreak();
   console.log('✦ 云游中国 - 智能旅行助手已启动');
   console.log('✦ Agent 架构：感知(天气API) → 推理(建议引擎) → 行动(推荐输出)');
 }
@@ -4759,76 +4758,6 @@ function setupHeroMouseGlow() {
       bg.style.setProperty('--my', y + '%');
     });
   });
-}
-
-/* 首屏背景：鼠标划过时浮现一道"流星"光带，沿运动方向跟随光标掠过背景（位于内容与背景之间）
-   ——用 lerp 让位置/角度有惯性跟随，避免硬切；亮头在远端、光标在中段 */
-function setupMeteorStreak() {
-  var hero = document.querySelector('.hero');
-  if (!hero) return;
-  var m = document.createElement('span');
-  m.className = 'meteor';
-  hero.appendChild(m);
-
-  var targetX = 0, targetY = 0;
-  var displayX = 0, displayY = 0;
-  var targetAngle = -20, displayAngle = -20;
-  var lastTX = null, lastTY = null;
-  var raf = null, active = false, initialized = false, idleTimer = null;
-  var POS_LERP = 0.22;   // 位置惯性：越小越拖尾、越大越跟手
-  var ANG_LERP = 0.14;   // 角度惯性：越小越慢转、越大越快对齐
-
-  function tick() {
-    if (!initialized) {
-      displayX = targetX; displayY = targetY; displayAngle = targetAngle;
-      initialized = true;
-    } else {
-      displayX += (targetX - displayX) * POS_LERP;
-      displayY += (targetY - displayY) * POS_LERP;
-      // 角度走最短路径（处理 -180/180 跳变）
-      var diff = targetAngle - displayAngle;
-      if (diff > 180) diff -= 360;
-      if (diff < -180) diff += 360;
-      displayAngle += diff * ANG_LERP;
-    }
-    m.style.left = displayX + 'px';
-    m.style.top = displayY + 'px';
-    m.style.transform = 'rotate(' + displayAngle + 'deg)';
-
-    if (active || Math.abs(targetX - displayX) > 0.4 || Math.abs(targetY - displayY) > 0.4) {
-      raf = requestAnimationFrame(tick);
-    } else {
-      raf = null;
-    }
-  }
-
-  window.addEventListener('mousemove', function(e) {
-    var r = hero.getBoundingClientRect();
-    targetX = e.clientX - r.left;
-    targetY = e.clientY - r.top;
-    if (lastTX !== null) {
-      var dx = targetX - lastTX, dy = targetY - lastTY;
-      if (dx || dy) targetAngle = Math.atan2(dy, dx) * 180 / Math.PI;
-    }
-    lastTX = targetX; lastTY = targetY;
-
-    if (!active) {
-      // 重新激活时直接对齐当前位置，避免从远处飞过来
-      displayX = targetX; displayY = targetY; displayAngle = targetAngle;
-      m.classList.add('is-on');
-      active = true;
-    }
-    if (!raf) raf = requestAnimationFrame(tick);
-
-    if (idleTimer) clearTimeout(idleTimer);
-    idleTimer = setTimeout(function() {
-      m.classList.remove('is-on');
-      active = false;
-      lastTX = null; lastTY = null;
-      // 淡出后让 rAF 继续把 display 收敛到 target，再停
-      if (!raf) raf = requestAnimationFrame(tick);
-    }, 420);
-  }, { passive: true });
 }
 
 /* 滚动进入视口时淡入上移，减弱页面静态感 */
