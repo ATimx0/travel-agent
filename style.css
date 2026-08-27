@@ -659,7 +659,6 @@ img { max-width: 100%; display: block; }
 .hero-search {
   display: flex;
   gap: 0;
-  position: relative;
   max-width: 540px;
   margin: 0 auto var(--sp-10);
   background: var(--glass-search);
@@ -731,7 +730,6 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  position: relative;
   padding: var(--sp-2) var(--sp-5);
   border-radius: var(--radius-lg);
   background: var(--glass-stat);
@@ -789,22 +787,22 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
 }
 
-/* 鼠标划过：流星光带（亮头 + 拖尾，沿运动方向跟随光标） */
+/* 鼠标划过背景：流星光带（亮头 + 拖尾，沿运动方向跟随光标，位于内容与背景之间） */
 .meteor {
   position: absolute;
   top: 0;
   left: 0;
-  width: 120px;
-  height: 6px;
-  margin: -3px 0 0 -60px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0) 8%, rgba(255, 255, 255, 0.85) 90%, #fff 100%);
-  filter: blur(1.5px) drop-shadow(0 0 10px rgba(56, 189, 248, 0.7));
+  width: 180px;
+  height: 5px;
+  margin: -2.5px 0 0 -90px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.5) 72%, rgba(255, 255, 255, 0.95) 92%, #fff 100%);
+  filter: blur(1.5px) drop-shadow(0 0 14px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 26px rgba(56, 189, 248, 0.45));
   opacity: 0;
   pointer-events: none;
   transform: rotate(-20deg);
   transition: opacity var(--dur-normal) var(--ease-out);
-  z-index: 4;
+  z-index: 0;
 }
 
 .meteor::before {

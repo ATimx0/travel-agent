@@ -4761,38 +4761,43 @@ function setupHeroMouseGlow() {
   });
 }
 
-/* 首屏搜索框/统计卡：鼠标划过浮现"流星"光带（亮头+拖尾，沿运动方向跟随光标） */
+/* 首屏背景：鼠标划过时浮现一道"流星"光带，沿运动方向跟随光标掠过背景（位于内容与背景之间） */
 function setupMeteorStreak() {
-  var targets = document.querySelectorAll('.hero-search, .stat');
-  targets.forEach(function(el) {
-    if (!el) return;
-    var m = document.createElement('span');
-    m.className = 'meteor';
-    el.appendChild(m);
-    var raf = null, x = 0, y = 0, lastX = null, lastY = null, angle = -20, on = false;
-    el.addEventListener('mousemove', function(e) {
-      var r = el.getBoundingClientRect();
-      x = e.clientX - r.left;
-      y = e.clientY - r.top;
-      if (lastX !== null) {
-        var dx = x - lastX, dy = y - lastY;
-        if (dx || dy) angle = Math.atan2(dy, dx) * 180 / Math.PI;
-      }
-      lastX = x; lastY = y;
-      if (!raf) raf = requestAnimationFrame(function() {
-        raf = null;
-        m.style.left = x + 'px';
-        m.style.top = y + 'px';
-        m.style.transform = 'rotate(' + angle + 'deg)';
-        if (!on) { m.classList.add('is-on'); on = true; }
-      });
-    });
-    el.addEventListener('mouseleave', function() {
-      on = false;
-      lastX = null; lastY = null;
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+  var m = document.createElement('span');
+  m.className = 'meteor';
+  hero.appendChild(m);
+
+  var raf = null, x = 0, y = 0, lastX = null, lastY = null, angle = -20;
+  var idleTimer = null, active = false;
+
+  function render() {
+    raf = null;
+    m.style.left = x + 'px';
+    m.style.top = y + 'px';
+    m.style.transform = 'rotate(' + angle + 'deg)';
+    if (!active) { m.classList.add('is-on'); active = true; }
+  }
+
+  window.addEventListener('mousemove', function(e) {
+    var r = hero.getBoundingClientRect();
+    x = e.clientX - r.left;
+    y = e.clientY - r.top;
+    if (lastX !== null) {
+      var dx = x - lastX, dy = y - lastY;
+      if (dx || dy) angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    }
+    lastX = x; lastY = y;
+    if (!raf) raf = requestAnimationFrame(render);
+    // 鼠标停止移动后淡出
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(function() {
       m.classList.remove('is-on');
-    });
-  });
+      active = false;
+      lastX = null; lastY = null;
+    }, 450);
+  }, { passive: true });
 }
 
 /* 滚动进入视口时淡入上移，减弱页面静态感 */
